@@ -1,0 +1,44 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    coderay (1.0.8)
+    ffi (1.2.0)
+    growl (1.0.3)
+    guard (1.6.0)
+      listen (>= 0.6.0)
+      lumberjack (>= 1.0.2)
+      pry (>= 0.9.10)
+      thor (>= 0.14.6)
+    guard-bundler (1.0.0)
+      bundler (~> 1.0)
+      guard (~> 1.1)
+    listen (0.6.0)
+    lumberjack (1.0.2)
+    method_source (0.8.1)
+    polyglot (0.3.3)
+    pry (0.9.10)
+      coderay (~> 1.0.5)
+      method_source (~> 0.8)
+      slop (~> 3.3.1)
+    rb-fchange (0.0.6)
+      ffi
+    rb-fsevent (0.9.2)
+    rb-inotify (0.8.8)
+      ffi (>= 0.5.0)
+    slop (3.3.3)
+    thor (0.16.0)
+    treetop (1.4.12)
+      polyglot
+      polyglot (>= 0.3.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  growl
+  guard
+  guard-bundler
+  rb-fchange
+  rb-fsevent
+  rb-inotify
+  treetop
