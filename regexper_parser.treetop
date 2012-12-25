@@ -41,8 +41,8 @@ grammar Regexper
 
   rule repeat_spec
     '{' start:([0-9]+) ',' stop:([0-9]+) '}' <RepeatSpecFull> /
-    '{' '' ',' stop:([0-9]+) '}' <RepeatSpecUpTo> /
-    '{' start:([0-9]+) ',' '' '}' <RepeatSpecAtLeast> /
+    '{,' stop:([0-9]+) '}' <RepeatSpecUpTo> /
+    '{' start:([0-9]+) ',}' <RepeatSpecAtLeast> /
     '{' value:([0-9]+) '}' <RepeatSpecExact>
   end
 
