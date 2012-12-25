@@ -17,119 +17,152 @@ module Regexper
   end
 end
 
-class Treetop::Runtime::SyntaxNode
-  def describe
-    if terminal?
-      []
-    else
-      elements.map(&:describe).flatten
-    end
-  end
-end
-
 module Regexper
   module Regexp
-    def describe
-      result = [anchored_match.describe]
+    def content
+      if alternate.empty?
+        [match]
+      else
+        [match] + alternate.regexp.content
+      end
+    end
 
-      unless alternate.empty?
-        result << 'OR'
-        result << alternate.regexp.describe
+    def to_obj
+      {
+        :type => :regexp,
+        :content => content.map(&:to_obj)
+      }
+    end
+  end
+
+  module Match
+    def anchor_start?
+      !anchor_start.empty?
+    end
+
+    def anchor_end?
+      !anchor_end.empty?
+    end
+
+    def content
+      match.elements
+    end
+
+    def to_obj
+      clean_content = []
+      content.map(&:to_obj).each do |element|
+        if clean_content.last.is_a?(String) && element.is_a?(String)
+          clean_content << "#{clean_content.pop}#{element}"
+        else
+          clean_content << element
+        end
       end
 
-      result
-    end
-  end
-
-  module AnchorStart
-    def describe
-      ['AT THE BEGINNING OF THE LINE']
-    end
-  end
-
-  module AnchorEnd
-    def describe
-      ['AT THE END OF THE LINE']
+      {
+        :type => :match,
+        :start => anchor_start?,
+        :end => anchor_end?,
+        :content => clean_content
+      }
     end
   end
 
   module MatchRepetition
-    def describe
-      repetition_str = repetition.describe.flatten.join(' ')
-      match_str = match.describe.flatten.join(' ')
-      ["(#{match_str}) #{repetition_str}"]
+    def content
+      match
+    end
+
+    def to_obj
+      {
+        :type => :match_repetition,
+        :repeat_count => repetition.count,
+        :greedy => repetition.greedy?,
+        :content => content.to_obj
+      }
     end
   end
 
   module Repetition
-    def describe
-      [repeat.describe, (greedy.empty? ? 'GREEDILY' : 'NON GREEDILY')]
+    def greedy?
+      greedy.empty?
+    end
+
+    def count
+      repeat.count
     end
   end
 
   module RepeatAny
-    def describe
-      ['ZERO OR MORE TIMES']
+    def count
+      :any
     end
   end
 
   module RepeatRequired
-    def describe
-      ['ONE OR MORE TIMES']
+    def count
+      :required
     end
   end
 
   module RepeatOptional
-    def describe
-      ['ZERO OR ONE TIMES']
+    def count
+      :optional
     end
   end
 
   module RepeatSpecFull
-    def describe
-      ["#{start.text_value} TO #{stop.text_value} TIMES"]
+    def count
+      { :start => start.text_value.to_i, :stop => stop.text_value.to_i }
     end
   end
 
   module RepeatSpecUpTo
-    def describe
-      ["UP TO #{stop.text_value} TIMES"]
+    def count
+      { :stop => stop.text_value.to_i }
     end
   end
 
   module RepeatSpecAtLeast
-    def describe
-      ["AT LEAST #{start.text_value} TIMES"]
+    def count
+      { :start => start.text_value.to_i }
     end
   end
 
   module RepeatSpecExact
-    def describe
-      ["EXACTLY #{value.text_value} TIMES"]
+    def count
+      value.text_value.to_i
     end
   end
 
   module MatchSubexp
-    def describe
-      ["(#{flag.describe.flatten.join(' ')} #{regexp.describe.flatten.join(' ')})"]
+    def content
+      regexp.content
+    end
+
+    def to_obj
+      {
+        :type => :match_subexp,
+        :flag => flag.empty? ? nil : flag.to_sym,
+        :content => content.map(&:to_obj)
+      }
     end
   end
 
   module SubexpNoCapture
-    def describe
-      ['<<NO CAPTURE>>']
+    def to_sym
+      :no_capture
     end
   end
 
   module SubexpPositiveLookahead
-    def describe
-      ['<<POSITIVE LOOKAHEAD>>']
+    def to_sym
+      :positive_lookahead
     end
   end
 
   module SubexpNegativeLookahead
-    def describe
-      ['<<NEGATIVE LOOKAHEAD>>']
+    def to_sym
+      :negative_lookahead
     end
   end
 
@@ -138,139 +171,170 @@ module Regexper
       invert.text_value == '^'
     end
 
-    def describe
-      amount = (inverted? ? 'NONE' : 'ANY')
-      ["#{amount} OF: {#{match_spec.describe.join(', ')}}"]
+    def content
+      match_spec.elements
+    end
+
+    def to_obj
+      {
+        :type => :charset,
+        :inverted => inverted?,
+        :content => content.map(&:to_obj)
+      }
     end
   end
 
   module CharsetRange
-    def describe
-      ["#{start.text_value} THRU #{stop.text_value}"]
+    def to_obj
+      {
+        :type => :range,
+        :start => start.text_value,
+        :stop => stop.text_value
+      }
     end
   end
 
   module Literal
-    def describe
-      [text_value]
+    def to_obj
+      text_value
     end
   end
 
   module EscapedCharacter
-    def describe
-      if escape.extension_modules.length == 0
-        [escape.text_value]
+    def is_escaped_literal?
+      escape.extension_modules.length == 0
+    end
+
+    def content
+      escape
+    end
+
+    def to_obj
+      if is_escaped_literal?
+        content.text_value
       else
-        ["<<#{escape.describe.join(' ')}>>"]
+        {
+          :type => :escaped,
+          :content => content.to_obj
+        }
       end
     end
   end
 
   module AnyCharacter
-    def describe
-      ['ANY CHARACTER']
+    def to_obj
+      :any_character
     end
   end
 
   module BackspaceCharacter
-    def describe
-      ['BACKSPACE']
+    def to_obj
+      :backspace
     end
   end
 
   module WordBoundaryCharacter
-    def describe
-      ['WORD_BOUNDARY']
+    def to_obj
+      :word_boundary
     end
   end
 
   module NonWordBoundaryCharacter
-    def describe
-      ['NON_WORD_BOUNDARY']
+    def to_obj
+      :non_word_boundary
     end
   end
 
   module DigitCharacter
-    def describe
-      ['DIGIT']
+    def to_obj
+      :digit
     end
   end
 
   module NonDigitCharacter
-    def describe
-      ['NON_DIGIT']
+    def to_obj
+      :non_digit
     end
   end
 
   module FormFeedCharacter
-    def describe
-      ['FORM_FEED']
+    def to_obj
+      :form_feed
     end
   end
 
   module LineFeedCharacter
-    def describe
-      ['LINE_FEED']
+    def to_obj
+      :line_feed
     end
   end
 
   module CarriageReturnCharacter
-    def describe
-      ['CARRIAGE_RETURN']
+    def to_obj
+      :carriage_return
     end
   end
 
   module WhiteSpaceCharacter
-    def describe
-      ['WHITE_SPACE']
+    def to_obj
+      :white_space
     end
   end
 
   module NonWhiteSpaceCharacter
-    def describe
-      ['NON_WHITE_SPACE']
+    def to_obj
+      :non_white_space
     end
   end
 
   module TabCharacter
-    def describe
-      ['TAB']
+    def to_obj
+      :tab
     end
   end
 
   module VerticalTabCharacter
-    def describe
-      ['VERTICAL_TAB']
+    def to_obj
+      :vertical_tab
     end
   end
 
   module WordCharacter
-    def describe
-      ['WORD']
+    def to_obj
+      :word
     end
   end
 
   module NonWordCharacter
-    def describe
-      ['NON_WORD']
+    def to_obj
+      :non_word
     end
   end
 
   module ControlCharacter
-    def describe
-      ["CTRL-#{code.text_value.upcase}"]
+    def to_obj
+      {
+        :type => :content,
+        :code => code.text_value.upcase
+      }
     end
   end
 
   module HexCharacter
-    def describe
-      ["0x#{code.text_value.upcase}"]
+    def to_obj
+      {
+        :type => :hex,
+        :code => code.text_value.upcase
+      }
     end
   end
 
   module UnicodeCharacter
-    def describe
-      ["unicode(#{code.text_value.upcase})"]
+    def to_obj
+      {
+        :type => :unicode,
+        :code => code.text_value.upcase
+      }
     end
   end
 end

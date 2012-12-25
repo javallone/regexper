@@ -1,22 +1,23 @@
 grammar Regexper
   rule regexp
-    anchored_match alternate:('|' regexp)? <Regexp>
-  end
-
-  rule anchored_match
-    anchor_start? match anchor_end?
+    match:(match) alternate:('|' regexp)? <Regexp>
   end
 
   rule anchor_start
-    '^' <AnchorStart>
+    '^'
   end
 
   rule anchor_end
-    '$' <AnchorEnd>
+    '$'
   end
 
   rule match
-    (match_repetition / match_subexp / match_charset / match_terminal)*
+    anchor_start:anchor_start? match:(
+      match_repetition /
+      match_subexp /
+      match_charset /
+      match_terminal
+    )* anchor_end:anchor_end? <Match>
   end
 
   rule match_repetition
@@ -85,6 +86,7 @@ grammar Regexper
   rule escaped_charset_character
     '\\' escape:(
       backspace_character /
+      control_character /
       digit_character /
       non_digit_character /
       form_feed_character /
