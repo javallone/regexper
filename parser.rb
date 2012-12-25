@@ -32,7 +32,7 @@ module Regexper
     def describe
       result = [anchored_match.describe]
 
-      unless alternate.text_value.blank?
+      unless alternate.empty?
         result << 'OR'
         result << alternate.regexp.describe
       end
@@ -63,7 +63,7 @@ module Regexper
 
   module Repetition
     def describe
-      [repeat.describe, (greedy.text_value.length > 0 ? 'NON GREEDILY' : 'GREEDILY')]
+      [repeat.describe, (greedy.empty? ? 'GREEDILY' : 'NON GREEDILY')]
     end
   end
 
