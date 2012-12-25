@@ -158,8 +158,6 @@ module Regexper
 
   module EscapedCharacter
     def describe
-      puts(inspect)
-      puts(escape.text_value)
       if escape.extension_modules.length == 0
         [escape.text_value]
       else
