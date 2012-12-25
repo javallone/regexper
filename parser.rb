@@ -85,20 +85,27 @@ module Regexper
     end
   end
 
-  module RepeatSpec
+  module RepeatSpecFull
     def describe
-      start_val = start.text_value
-      stop_val = stop.text_value
+      ["#{start.text_value} TO #{stop.text_value} TIMES"]
+    end
+  end
 
-      if start_val.blank? && stop_val.blank?
-        raise Exception, 'Invalid repetition description'
-      elsif start_val.blank?
-        ["UP TO #{stop_val} TIMES"]
-      elsif stop_val.blank?
-        ["AT LEAST #{start_val} TIMES"]
-      else
-        ["#{start_val} TO #{stop_val} TIMES"]
-      end
+  module RepeatSpecUpTo
+    def describe
+      ["UP TO #{stop.text_value} TIMES"]
+    end
+  end
+
+  module RepeatSpecAtLeast
+    def describe
+      ["AT LEAST #{start.text_value} TIMES"]
+    end
+  end
+
+  module RepeatSpecExact
+    def describe
+      ["EXACTLY #{value.text_value} TIMES"]
     end
   end
 
@@ -151,6 +158,8 @@ module Regexper
 
   module EscapedCharacter
     def describe
+      puts(inspect)
+      puts(escape.text_value)
       if escape.extension_modules.length == 0
         [escape.text_value]
       else
