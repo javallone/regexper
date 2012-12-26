@@ -124,7 +124,7 @@ describe "Regexper modules" do
 
   end
 
-  describe Regexper::MatchRepetition do
+  describe Regexper::Repetition do
 
     def repeat_any
       match_for('a*')
@@ -226,7 +226,7 @@ describe "Regexper modules" do
 
   end
 
-  describe Regexper::MatchSubexp do
+  describe Regexper::Subexp do
 
     def capturing
       match_for('(capture)')
@@ -329,7 +329,7 @@ describe "Regexper modules" do
 
   end
 
-  describe Regexper::MatchCharset do
+  describe Regexper::Charset do
 
     def charset
       match_for('[abc]')

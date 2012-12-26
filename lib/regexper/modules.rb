@@ -51,7 +51,7 @@ module Regexper
     end
   end
 
-  module MatchRepetition
+  module Repetition
     def content
       match
     end
@@ -59,14 +59,14 @@ module Regexper
     def to_obj
       {
         :type => :repetition,
-        :repeat_count => repetition.count,
-        :greedy => repetition.greedy?,
+        :repeat_count => repetition_count.count,
+        :greedy => repetition_count.greedy?,
         :content => content.to_obj
       }
     end
   end
 
-  module Repetition
+  module RepetitionCount
     def greedy?
       greedy.empty?
     end
@@ -118,7 +118,7 @@ module Regexper
     end
   end
 
-  module MatchSubexp
+  module Subexp
     @@capture_group = 0
 
     def content
@@ -167,7 +167,7 @@ module Regexper
     end
   end
 
-  module MatchCharset
+  module Charset
     def inverted?
       invert.text_value == '^'
     end
