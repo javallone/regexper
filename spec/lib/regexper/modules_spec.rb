@@ -252,6 +252,26 @@ describe "Regexper modules" do
 
     end
 
+    describe "#kind" do
+
+      it "is :capture for capturing sub-expressions" do
+        capturing.kind.should == :capture
+      end
+
+      it "is :no_capture for non-capturing sub-expressions" do
+        noncapturing.kind.should == :no_capture
+      end
+
+      it "is :positive_lookahead for positive lookahead sub-expressions" do
+        positive.kind.should == :positive_lookahead
+      end
+
+      it "is :negative_lookahead for negative lookahead sub-expressions" do
+        negative.kind.should == :negative_lookahead
+      end
+
+    end
+
     describe "#to_obj" do
 
       it "returns an object with :type of :subexp" do
@@ -264,22 +284,22 @@ describe "Regexper modules" do
         ]
       end
 
-      describe "the :flag value" do
+      describe "the :kind value" do
 
         it "is :capture for capturing sub-expressions" do
-          capturing.to_obj[:flag].should == :capture
+          capturing.to_obj[:kind].should == :capture
         end
 
         it "is :no_capture for non-capturing sub-expressions" do
-          noncapturing.to_obj[:flag].should == :no_capture
+          noncapturing.to_obj[:kind].should == :no_capture
         end
 
         it "is :positive_lookahead for a positive lookahead sub-expression" do
-          positive.to_obj[:flag].should == :positive_lookahead
+          positive.to_obj[:kind].should == :positive_lookahead
         end
 
         it "is :negative_lookahead for a negative lookahead sub-expression" do
-          negative.to_obj[:flag].should == :negative_lookahead
+          negative.to_obj[:kind].should == :negative_lookahead
         end
 
       end

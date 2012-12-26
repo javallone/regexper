@@ -123,10 +123,14 @@ module Regexper
       regexp.content
     end
 
+    def kind
+      flag.empty? ? :capture : flag.to_sym
+    end
+
     def to_obj
       {
         :type => :subexp,
-        :flag => flag.empty? ? :capture : flag.to_sym,
+        :kind => kind,
         :content => content.map(&:to_obj)
       }
     end
