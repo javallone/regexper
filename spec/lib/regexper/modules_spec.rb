@@ -272,6 +272,23 @@ describe "Regexper modules" do
 
     end
 
+    describe "#capture_group" do
+
+      it "returns nil for :no_capture, :positive_lookahead, and :negative_lookahead sub-expressions" do
+        noncapturing.capture_group.should be_nil
+        positive.capture_group.should be_nil
+        negative.capture_group.should be_nil
+      end
+
+      it "returns the index of the group for :capture sub-expressions" do
+        groups = Regexper.parse('(zero)((two)one)').content[0].content
+        groups[0].capture_group.should == 0
+        groups[1].capture_group.should == 1
+        groups[1].content[0].content[0].capture_group.should == 2
+      end
+
+    end
+
     describe "#to_obj" do
 
       it "returns an object with :type of :subexp" do
@@ -282,6 +299,10 @@ describe "Regexper modules" do
         capturing.to_obj[:content][0][:content].should == [
           { :type => :literal, :content => 'capture' }
         ]
+      end
+
+      it "includes the capture group as :group" do
+        capturing.to_obj[:group].should == 0
       end
 
       describe "the :kind value" do

@@ -119,6 +119,8 @@ module Regexper
   end
 
   module MatchSubexp
+    @@capture_group = 0
+
     def content
       regexp.content
     end
@@ -127,10 +129,21 @@ module Regexper
       flag.empty? ? :capture : flag.to_sym
     end
 
+    def capture_group
+      if kind == :capture
+        @capture_group ||= begin
+          group = @@capture_group
+          @@capture_group += 1
+          group
+        end
+      end
+    end
+
     def to_obj
       {
         :type => :subexp,
         :kind => kind,
+        :group => capture_group,
         :content => content.map(&:to_obj)
       }
     end

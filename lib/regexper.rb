@@ -14,6 +14,9 @@ module Regexper
       raise Exception, "Parse error: #{@@parser.failure_reason} line=#{@@parser.failure_line}, column=#{@@parser.failure_column}"
     end
 
+    MatchSubexp.class_variable_set(:@@capture_group, 0)
+    tree.to_obj # Set capture groups
+
     return tree
   end
 end
