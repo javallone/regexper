@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+$LOAD_PATH << File.join(File.expand_path(File.dirname(__FILE__)), '../lib')
+
+require 'regexper'
+require 'pp'
+
+ARGV.each do |expr|
+  PP.pp(Regexper.parse(expr).to_obj)
+end
