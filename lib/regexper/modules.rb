@@ -241,7 +241,10 @@ module Regexper
 
   module AnyCharacter
     def to_obj
-      :any_character
+      {
+        :type => :any_character,
+        :range => [interval.begin, interval.end]
+      }
     end
   end
 

@@ -423,7 +423,7 @@ describe "Regexper modules" do
   describe "special characters and escapes" do
 
     it "supports '.' as :any_character" do
-      match_for('.').to_obj.should == :any_character
+      match_for('.').to_obj.should == { :type => :any_character, :range => [0, 1] }
     end
 
     it "supports \\b as :word_boundary escape" do
