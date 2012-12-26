@@ -28,8 +28,7 @@ describe "Regexper modules" do
 
       it "includes the content as :content" do
         obj = @regexp.to_obj
-        obj[:content][0][:content].should == [{ :type => :literal, :content => 'test1' }]
-        obj[:content][1][:content].should == [{ :type => :literal, :content => 'test2' }]
+        obj[:content].length.should == 2
       end
 
     end
@@ -82,16 +81,16 @@ describe "Regexper modules" do
 
       it "returns the content of match as an array" do
         unanchored.content.map(&:to_obj).should == [
-          { :type => :literal, :content => 'u'},
-          { :type => :literal, :content => 'n'},
-          { :type => :literal, :content => 'a'},
-          { :type => :literal, :content => 'n'},
-          { :type => :literal, :content => 'c'},
-          { :type => :literal, :content => 'h'},
-          { :type => :literal, :content => 'o'},
-          { :type => :literal, :content => 'r'},
-          { :type => :literal, :content => 'e'},
-          { :type => :literal, :content => 'd'}
+          { :type => :literal, :range => [0, 1], :content => 'u'},
+          { :type => :literal, :range => [1, 2], :content => 'n'},
+          { :type => :literal, :range => [2, 3], :content => 'a'},
+          { :type => :literal, :range => [3, 4], :content => 'n'},
+          { :type => :literal, :range => [4, 5], :content => 'c'},
+          { :type => :literal, :range => [5, 6], :content => 'h'},
+          { :type => :literal, :range => [6, 7], :content => 'o'},
+          { :type => :literal, :range => [7, 8], :content => 'r'},
+          { :type => :literal, :range => [8, 9], :content => 'e'},
+          { :type => :literal, :range => [9, 10], :content => 'd'}
         ]
       end
 
@@ -176,6 +175,7 @@ describe "Regexper modules" do
       it "includes the content as :content" do
         repeat_any.to_obj[:content].should == {
           :type => :literal,
+          :range => [0, 1],
           :content => 'a'
         }
       end
@@ -297,7 +297,7 @@ describe "Regexper modules" do
 
       it "includes the content as :content" do
         capturing.to_obj[:content][0][:content].should == [
-          { :type => :literal, :content => 'capture' }
+          { :type => :literal, :range => [1, 8], :content => 'capture' }
         ]
       end
 
@@ -347,9 +347,9 @@ describe "Regexper modules" do
 
       it "returns an array of values to match" do
         charset.content.map(&:to_obj).should == [
-          { :type => :literal, :content => 'a' },
-          { :type => :literal, :content => 'b' },
-          { :type => :literal, :content => 'c' }
+          { :type => :literal, :range => [1, 2], :content => 'a' },
+          { :type => :literal, :range => [2, 3], :content => 'b' },
+          { :type => :literal, :range => [3, 4], :content => 'c' }
         ]
       end
 
@@ -377,23 +377,28 @@ describe "Regexper modules" do
         obj = complete.to_obj
         obj[:content][0].should == {
           :type => :literal,
+          :range => [1, 2],
           :content => 'a'
         }
         obj[:content][1].should == {
           :type => :literal,
+          :range => [2, 3],
           :content => 'b'
         }
         obj[:content][2].should == {
           :type => :literal,
+          :range => [3, 4],
           :content => 'c'
         }
         obj[:content][3].should == {
           :type => :range,
+          :range => [4, 7],
           :start => '1',
           :stop => '9'
         }
         obj[:content][4].should == {
           :type => :escaped,
+          :range => [7, 9],
           :content => :backspace
         }
       end
@@ -422,60 +427,113 @@ describe "Regexper modules" do
     end
 
     it "supports \\b as :word_boundary escape" do
-      match_for('\\b').to_obj.should == { :type => :escaped, :content => :word_boundary }
+      match_for('\\b').to_obj.should == {
+        :type => :escaped,
+        :range => [0, 2],
+        :content => :word_boundary
+      }
     end
 
     it "supports \\B as :non_word_boundary escape" do
-      match_for('\\B').to_obj.should == { :type => :escaped, :content => :non_word_boundary }
+      match_for('\\B').to_obj.should == {
+        :type => :escaped,
+        :range => [0, 2],
+        :content => :non_word_boundary
+      }
     end
 
     it "supports \\d as :digit escape" do
-      match_for('\\d').to_obj.should == { :type => :escaped, :content => :digit }
+      match_for('\\d').to_obj.should == {
+        :type => :escaped,
+        :range => [0, 2],
+        :content => :digit
+      }
     end
 
     it "supports \\D as :non_digit escape" do
-      match_for('\\D').to_obj.should == { :type => :escaped, :content => :non_digit }
+      match_for('\\D').to_obj.should == {
+        :type => :escaped,
+        :range => [0, 2],
+        :content => :non_digit
+      }
     end
 
     it "supports \\f as :form_feed escape" do
-      match_for('\\f').to_obj.should == { :type => :escaped, :content => :form_feed }
+      match_for('\\f').to_obj.should == {
+        :type => :escaped,
+        :range => [0, 2],
+        :content => :form_feed
+      }
     end
 
     it "supports \\n as :line_feed escape" do
-      match_for('\\n').to_obj.should == { :type => :escaped, :content => :line_feed }
+      match_for('\\n').to_obj.should == {
+        :type => :escaped,
+        :range => [0, 2],
+        :content => :line_feed
+      }
     end
 
     it "supports \\r as :carriage_return escape" do
-      match_for('\\r').to_obj.should == { :type => :escaped, :content => :carriage_return }
+      match_for('\\r').to_obj.should == {
+        :type => :escaped,
+        :range => [0, 2],
+        :content => :carriage_return
+      }
     end
 
     it "supports \\s as :white_space escape" do
-      match_for('\\s').to_obj.should == { :type => :escaped, :content => :white_space }
+      match_for('\\s').to_obj.should == {
+        :type => :escaped,
+        :range => [0, 2],
+        :content => :white_space
+      }
     end
 
     it "supports \\S as :non_white_space escape" do
-      match_for('\\S').to_obj.should == { :type => :escaped, :content => :non_white_space }
+      match_for('\\S').to_obj.should == {
+        :type => :escaped,
+        :range => [0, 2],
+        :content => :non_white_space
+      }
     end
 
     it "supports \\t as :tab escape" do
-      match_for('\\t').to_obj.should == { :type => :escaped, :content => :tab }
+      match_for('\\t').to_obj.should == {
+        :type => :escaped,
+        :range => [0, 2],
+        :content => :tab
+      }
     end
 
     it "supports \\v as :vertical_tab escape" do
-      match_for('\\v').to_obj.should == { :type => :escaped, :content => :vertical_tab }
+      match_for('\\v').to_obj.should == {
+        :type => :escaped,
+        :range => [0, 2],
+        :content => :vertical_tab
+      }
     end
 
     it "supports \\w as :word escape" do
-      match_for('\\w').to_obj.should == { :type => :escaped, :content => :word }
+      match_for('\\w').to_obj.should == {
+        :type => :escaped,
+        :range => [0, 2],
+        :content => :word
+      }
     end
 
     it "supports \\W as :non_word escape" do
-      match_for('\\W').to_obj.should == { :type => :escaped, :content => :non_word }
+      match_for('\\W').to_obj.should == {
+        :type => :escaped,
+        :range => [0, 2],
+        :content => :non_word
+      }
     end
 
     it "supports \\cX as :control code escape" do
       match_for('\\cX').to_obj.should == {
         :type => :escaped,
+        :range => [0, 3],
         :content => { :type => :control, :code => 'X' }
       }
     end
@@ -483,6 +541,7 @@ describe "Regexper modules" do
     it "supports \\xNN as :hex code escape" do
       match_for('\\x1a').to_obj.should == {
         :type => :escaped,
+        :range => [0, 4],
         :content => { :type => :hex, :code => '1A' }
       }
     end
@@ -490,6 +549,7 @@ describe "Regexper modules" do
     it "supports \\uNNNN as :unicode escape" do
       match_for('\\u12ef').to_obj.should == {
         :type => :escaped,
+        :range => [0, 6],
         :content => { :type => :unicode, :code => '12EF' }
       }
     end

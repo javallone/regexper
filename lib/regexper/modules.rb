@@ -11,6 +11,7 @@ module Regexper
     def to_obj
       {
         :type => :regexp,
+        :range => [interval.begin, interval.end],
         :content => content.map(&:to_obj)
       }
     end
@@ -33,9 +34,11 @@ module Regexper
       clean_content = []
       content.map(&:to_obj).each do |element|
         if !clean_content.last.nil? && clean_content.last[:type] == :literal && element[:type] == :literal
+          start = clean_content.pop
           clean_content << {
             :type => :literal,
-            :content => "#{clean_content.pop[:content]}#{element[:content]}"
+            :range => [start[:range][0], element[:range][1]],
+            :content => "#{start[:content]}#{element[:content]}"
           }
         else
           clean_content << element
@@ -44,6 +47,7 @@ module Regexper
 
       {
         :type => :match,
+        :range => [interval.begin, interval.end],
         :start => anchor_start?,
         :end => anchor_end?,
         :content => clean_content
@@ -59,6 +63,7 @@ module Regexper
     def to_obj
       {
         :type => :repetition,
+        :range => [interval.begin, interval.end],
         :repeat_count => repetition_count.count,
         :greedy => repetition_count.greedy?,
         :content => content.to_obj
@@ -142,6 +147,7 @@ module Regexper
     def to_obj
       {
         :type => :subexp,
+        :range => [interval.begin, interval.end],
         :kind => kind,
         :group => capture_group,
         :content => content.map(&:to_obj)
@@ -179,6 +185,7 @@ module Regexper
     def to_obj
       {
         :type => :charset,
+        :range => [interval.begin, interval.end],
         :inverted => inverted?,
         :content => content.map(&:to_obj)
       }
@@ -189,6 +196,7 @@ module Regexper
     def to_obj
       {
         :type => :range,
+        :range => [interval.begin, interval.end],
         :start => start.text_value,
         :stop => stop.text_value
       }
@@ -199,6 +207,7 @@ module Regexper
     def to_obj
       {
         :type => :literal,
+        :range => [interval.begin, interval.end],
         :content => text_value
       }
     end
@@ -217,11 +226,13 @@ module Regexper
       if is_escaped_literal?
         {
           :type => :literal,
+          :range => [interval.begin, interval.end],
           :content => content.text_value
         }
       else
         {
           :type => :escaped,
+          :range => [interval.begin, interval.end],
           :content => content.to_obj
         }
       end
