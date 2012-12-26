@@ -32,8 +32,11 @@ module Regexper
     def to_obj
       clean_content = []
       content.map(&:to_obj).each do |element|
-        if clean_content.last.is_a?(String) && element.is_a?(String)
-          clean_content << "#{clean_content.pop}#{element}"
+        if !clean_content.last.nil? && clean_content.last[:type] == :literal && element[:type] == :literal
+          clean_content << {
+            :type => :literal,
+            :content => "#{clean_content.pop[:content]}#{element[:content]}"
+          }
         else
           clean_content << element
         end
@@ -55,7 +58,7 @@ module Regexper
 
     def to_obj
       {
-        :type => :match_repetition,
+        :type => :repetition,
         :repeat_count => repetition.count,
         :greedy => repetition.greedy?,
         :content => content.to_obj
@@ -122,8 +125,8 @@ module Regexper
 
     def to_obj
       {
-        :type => :match_subexp,
-        :flag => flag.empty? ? nil : flag.to_sym,
+        :type => :subexp,
+        :flag => flag.empty? ? :capture : flag.to_sym,
         :content => content.map(&:to_obj)
       }
     end
@@ -177,7 +180,10 @@ module Regexper
 
   module Literal
     def to_obj
-      text_value
+      {
+        :type => :literal,
+        :content => text_value
+      }
     end
   end
 
@@ -192,7 +198,10 @@ module Regexper
 
     def to_obj
       if is_escaped_literal?
-        content.text_value
+        {
+          :type => :literal,
+          :content => content.text_value
+        }
       else
         {
           :type => :escaped,
@@ -295,7 +304,7 @@ module Regexper
   module ControlCharacter
     def to_obj
       {
-        :type => :content,
+        :type => :control,
         :code => code.text_value.upcase
       }
     end
