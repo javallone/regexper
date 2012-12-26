@@ -113,7 +113,7 @@ grammar Regexper
   end
 
   rule literal
-    [^|\\.\]\(\)\{\}?+*$^] <Literal>
+    [^|\\.\[\(\)\{\}?+*$^] <Literal>
   end
 
   rule escaped_character
