@@ -42,6 +42,8 @@
     <input type="text" /><button type="submit">Draw</button>
   </form>
 
+  <div id="error"></div>
+
   <div id="paper-container"></div>
 
   <script>
@@ -52,8 +54,14 @@
         svg[i].parentElement.removeChild(svg[i]);
       }
 
+      document.getElementById('error').innerHTML = "";
+
       new microAjax("/parse", function(text) {
-        drawStructure("paper-container", JSON.parse(text));
+        if (this.request.status == 200) {
+          drawStructure("paper-container", JSON.parse(text));
+        } else if (this.request.status == 400) {
+          document.getElementById("error").innerHTML = JSON.parse(text).error;
+        }
       }, document.getElementsByTagName("input")[0].value);
 
       return false;

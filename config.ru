@@ -19,17 +19,34 @@ map '/parse' do
   run lambda { |env|
     request = Rack::Request.new(env)
     regexp = request.body.read
-    [
-      200,
-      {
-        'Content-Type' => 'application/json',
-        'Cache-Control' => 'no-cache' # TODO: Is this right?
-      },
-      [JSON.generate({
-        :raw_expr => regexp,
-        :structure => Regexper.parse(regexp).to_obj
-      })]
-    ]
+    begin
+      [
+        200,
+        {
+          'Content-Type' => 'application/json',
+          'Cache-Control' => 'no-cache' # TODO: Is this right?
+        },
+        [
+          JSON.generate({
+            :raw_expr => regexp,
+            :structure => Regexper.parse(regexp).to_obj
+          })
+        ]
+      ]
+    rescue Regexper::ParseError => error
+      [
+        400,
+        {
+          'Content-Type' => 'application/json',
+          'Cache-Control' => 'no-cache' # TODO: Is this right?
+        },
+        [
+          JSON.generate({
+            :error => error.to_s
+          })
+        ]
+      ]
+    end
   }
 end
 
