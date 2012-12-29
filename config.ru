@@ -1,4 +1,6 @@
-$LOAD_PATH << File.join(File.expand_path(File.dirname(__FILE__)), 'lib')
+root = Pathname.new(__FILE__).dirname
+
+$LOAD_PATH << root + 'lib'
 $stdout.sync = true
 
 require 'bundler'
@@ -9,9 +11,9 @@ Bundler.require(:default, ENV['RACK_ENV'].to_sym)
 
 map '/assets' do
   environment = Sprockets::Environment.new
-  environment.append_path 'app/assets/javascripts'
-  environment.append_path 'app/assets/stylesheets'
-  environment.append_path 'app/assets/images'
+  environment.append_path root.join('app/assets/javascripts')
+  environment.append_path root.join('app/assets/stylesheets')
+  environment.append_path root.join('app/assets/images')
   run environment
 end
 
@@ -50,7 +52,7 @@ map '/parse' do
   }
 end
 
-use Rack::Static, :urls => ["/"], :root => "public"
+use Rack::Static, :urls => ["/"], :root => root.join("public")
 
 run lambda { |env|
   [204, {}, []]
