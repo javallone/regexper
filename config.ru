@@ -18,7 +18,7 @@ end
 map '/parse' do
   run lambda { |env|
     request = Rack::Request.new(env)
-    regexp = request.params["r"]
+    regexp = request.body.read
     [
       200,
       {
