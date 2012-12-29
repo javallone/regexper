@@ -4,34 +4,6 @@
 
   <title>Regexper</title>
 
-  <script src="/assets/raphael-min.js"></script>
-  <script src="/assets/microajax.js"></script>
-  <script src="/assets/lib.js"></script>
-  <script src="/assets/element.js"></script>
-  <script src="/assets/container.js"></script>
-  <script src="/assets/text.js"></script>
-  <script src="/assets/blank.js"></script>
-  <script src="/assets/bounding_box.js"></script>
-  <script src="/assets/skip_line.js"></script>
-  <script src="/assets/hbox.js"></script>
-  <script src="/assets/vbox.js"></script>
-
-  <script>
-    function drawStructure(id, rexp) {
-      Raphael(id, 320, 240, function() {
-        var expression, box;
-
-        expression = render(this, rexp.structure);
-
-        expression.stack();
-        expression.position(10, 10);
-
-        box = expression.get_box();
-        this.setSize(box.width + 20, box.height + 20);
-      });
-    }
-  </script>
-
 </head>
 
 <body>
@@ -46,26 +18,54 @@
 
   <div id="paper-container"></div>
 
-  <script>
-    document.getElementsByTagName("form")[0].onsubmit = function() {
-      var svg = document.getElementsByTagName("svg"), i;
+  <script src="/assets/raphael-min.js"></script>
+  <script src="/assets/microajax.js"></script>
+  <script src="/assets/lib.js"></script>
+  <script src="/assets/element.js"></script>
+  <script src="/assets/container.js"></script>
+  <script src="/assets/text.js"></script>
+  <script src="/assets/blank.js"></script>
+  <script src="/assets/bounding_box.js"></script>
+  <script src="/assets/skip_line.js"></script>
+  <script src="/assets/hbox.js"></script>
+  <script src="/assets/vbox.js"></script>
 
-      for (i = 0; i < svg.length; i++) {
-        svg[i].parentElement.removeChild(svg[i]);
+  <script>
+    (function() {
+      function drawStructure(id, rexp) {
+        Raphael(id, 320, 240, function() {
+          var expression, box;
+
+          expression = render(this, rexp.structure);
+
+          expression.stack();
+          expression.position(10, 10);
+
+          box = expression.get_box();
+          this.setSize(box.width + 20, box.height + 20);
+        });
       }
 
-      document.getElementById('error').innerHTML = "";
+      var form = document.getElementsByTagName("form")[0],
+        input = form.getElementsByTagName("input")[0],
+        error = document.getElementById("error"),
+        paper_container = document.getElementById("paper-container");
 
-      new microAjax("/parse", function(text) {
-        if (this.request.status == 200) {
-          drawStructure("paper-container", JSON.parse(text));
-        } else if (this.request.status == 400) {
-          document.getElementById("error").innerHTML = JSON.parse(text).error;
-        }
-      }, document.getElementsByTagName("input")[0].value);
+      form.onsubmit = function() {
+        paper_container.innerHTML = "";
+        error.innerHTML = "";
 
-      return false;
-    };
+        new microAjax("/parse", function(text) {
+          if (this.request.status == 200) {
+            drawStructure(paper_container, JSON.parse(text));
+          } else if (this.request.status == 400) {
+            error.innerHTML = JSON.parse(text).error;
+          }
+        }, input.value);
+
+        return false;
+      };
+    }());
   </script>
 
 </body>
