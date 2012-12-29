@@ -1,6 +1,9 @@
 source 'http://rubygems.org'
 
 gem 'treetop'
+gem 'sprockets'
+gem 'rack'
+gem 'thin'
 
 group :development do
   gem 'guard'
@@ -12,6 +15,8 @@ group :development do
   gem 'rb-fchange', :require => false
 
   gem 'growl', :require => false
+
+  gem 'foreman'
 end
 
 group :development, :test do

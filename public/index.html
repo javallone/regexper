@@ -1,0 +1,45 @@
+<html>
+
+<head>
+
+  <title>Regexper</title>
+
+  <script src="/assets/raphael-min.js"></script>
+  <script src="/assets/lib.js"></script>
+  <script src="/assets/element.js"></script>
+  <script src="/assets/container.js"></script>
+  <script src="/assets/text.js"></script>
+  <script src="/assets/blank.js"></script>
+  <script src="/assets/bounding_box.js"></script>
+  <script src="/assets/skip_line.js"></script>
+  <script src="/assets/hbox.js"></script>
+  <script src="/assets/vbox.js"></script>
+
+  <script>
+    Raphael("#paper-container", 320, 240, function() {
+      var expression, box;
+
+      expression = render(this, {
+        type: "literal",
+        content: "HELLO WORLD"
+      });
+
+      expression.stack();
+      expression.position(10, 10);
+
+      box = expression.get_box();
+      this.setSize(box.width + 20, box.height + 20);
+    });
+  </script>
+
+</head>
+
+<body>
+
+  <h1>Regexper</h1>
+
+  <div id="#paper-container"></div>
+
+</body>
+
+</html>
