@@ -462,12 +462,15 @@ var structure_renderers = {
     element = new BoundingBox(paper, text);
 
     element.attr({
-      r: 3,
-      fill: '#bada55',
-      stroke: '#bada55',
+      r: 0,
+      fill: '#6b6659',
+      stroke: '#6b6659',
     });
 
     text.set_margin(5);
+    text.attr({
+      fill: '#ffffff'
+    });
 
     return element;
   },
