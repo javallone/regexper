@@ -5,6 +5,7 @@
   <title>Regexper</title>
 
   <script src="/assets/raphael-min.js"></script>
+  <script src="/assets/microajax.js"></script>
   <script src="/assets/lib.js"></script>
   <script src="/assets/element.js"></script>
   <script src="/assets/container.js"></script>
@@ -16,20 +17,19 @@
   <script src="/assets/vbox.js"></script>
 
   <script>
-    Raphael("paper-container", 320, 240, function() {
-      var expression, box;
+    function drawStructure(id, rexp) {
+      Raphael(id, 320, 240, function() {
+        var expression, box;
 
-      expression = render(this, {
-        type: "literal",
-        content: "HELLO WORLD"
+        expression = render(this, rexp.structure);
+
+        expression.stack();
+        expression.position(10, 10);
+
+        box = expression.get_box();
+        this.setSize(box.width + 20, box.height + 20);
       });
-
-      expression.stack();
-      expression.position(10, 10);
-
-      box = expression.get_box();
-      this.setSize(box.width + 20, box.height + 20);
-    });
+    }
   </script>
 
 </head>
@@ -38,7 +38,27 @@
 
   <h1>Regexper</h1>
 
+  <form method="POST" action="/parser">
+    <input type="text" /><button type="submit">Draw</button>
+  </form>
+
   <div id="paper-container"></div>
+
+  <script>
+    document.getElementsByTagName("form")[0].onsubmit = function() {
+      var svg = document.getElementsByTagName("svg"), i;
+
+      for (i = 0; i < svg.length; i++) {
+        svg[i].parentElement.removeChild(svg[i]);
+      }
+
+      new microAjax("/parse", function(text) {
+        drawStructure("paper-container", JSON.parse(text));
+      }, document.getElementsByTagName("input")[0].value);
+
+      return false;
+    };
+  </script>
 
 </body>
 
