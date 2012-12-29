@@ -393,8 +393,8 @@ describe "Regexper modules" do
         obj[:content][3].should == {
           :type => :range,
           :range => [4, 7],
-          :start => '1',
-          :stop => '9'
+          :start => { :type => :literal, :range => [4, 5], :content => '1' },
+          :stop => { :type => :literal, :range => [6, 7], :content => '9'}
         }
         obj[:content][4].should == {
           :type => :escaped,

@@ -197,8 +197,8 @@ module Regexper
       {
         :type => :range,
         :range => [interval.begin, interval.end],
-        :start => start.text_value,
-        :stop => stop.text_value
+        :start => start.to_obj,
+        :stop => stop.to_obj
       }
     end
   end
