@@ -8,29 +8,29 @@ require 'json'
 Bundler.require(:default, ENV['RACK_ENV'].to_sym)
 
 map '/assets' do
-    environment = Sprockets::Environment.new
-    environment.append_path 'app/assets/javascripts'
-    environment.append_path 'app/assets/stylesheets'
-    environment.append_path 'app/assets/images'
-    run environment
+  environment = Sprockets::Environment.new
+  environment.append_path 'app/assets/javascripts'
+  environment.append_path 'app/assets/stylesheets'
+  environment.append_path 'app/assets/images'
+  run environment
 end
 
 map '/parse' do
-    run lambda { |env|
-        request = Rack::Request.new(env)
-        regexp = request.params["r"]
-        [
-            200,
-            {
-                'Content-Type' => 'application/json',
-                'Cache-Control' => 'no-cache' # TODO: Is this right?
-            },
-            [JSON.generate({
-                :raw_expr => regexp,
-                :structure => Regexper.parse(regexp).to_obj
-            })]
-        ]
-    }
+  run lambda { |env|
+    request = Rack::Request.new(env)
+    regexp = request.params["r"]
+    [
+      200,
+      {
+        'Content-Type' => 'application/json',
+        'Cache-Control' => 'no-cache' # TODO: Is this right?
+      },
+      [JSON.generate({
+        :raw_expr => regexp,
+        :structure => Regexper.parse(regexp).to_obj
+      })]
+    ]
+  }
 end
 
 use Rack::Static, :urls => ["/"], :root => "public"
