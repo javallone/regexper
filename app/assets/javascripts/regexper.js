@@ -11,11 +11,10 @@ define(function() {
         },
 
         render: function(paper, structure, complete) {
-            var module_name = 'regexper/' + structure.type,
-                module;
+            var module_name = 'regexper/' + structure.type;
 
             require([module_name], function(Module) {
-                module = new Module(paper, structure);
+                var module = new Module(paper, structure);
                 module.complete(function() {
                     complete(module);
                 });
