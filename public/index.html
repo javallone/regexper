@@ -36,6 +36,24 @@
         baseUrl: '/assets'
     });
 
+    function draw_structure(id, structure) {
+        Raphael(id, 320, 240, function() {
+            var paper = this;
+
+            require(['regexper'], function(Regexper) {
+                Regexper.render(paper, structure, function(expression) {
+                    var box;
+
+                    expression.stack();
+                    expression.position(10, 10);
+
+                    box = expression.get_box();
+                    paper.setSize(box.width + 20, box.height + 20);
+                });
+            });
+        });
+    }
+
     (function() {
       function drawStructure(id, rexp) {
         Raphael(id, 320, 240, function() {
