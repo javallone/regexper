@@ -34,8 +34,10 @@ define(['regexper'], function(Regexper) {
             });
         },
 
-        insert_after: function(relative) {
-            this._rect.insertAfter(relative);
+        stack: function(relative) {
+            if (relative) {
+                this._rect.insertAfter(relative);
+            }
             this._text.insertAfter(this._rect);
         },
 

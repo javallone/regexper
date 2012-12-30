@@ -94,7 +94,7 @@ define(['regexper/literal', 'mock/paper', 'mock/element'], function(Literal, Pap
 
         });
 
-        describe('.insert_after', function() {
+        describe('.stack', function() {
 
             it('inserts the rect element after the element passed in', function() {
                 var literal = new Literal(paper, structure('Test')),
@@ -102,7 +102,7 @@ define(['regexper/literal', 'mock/paper', 'mock/element'], function(Literal, Pap
 
                 spyOn(literal._rect, 'insertAfter');
 
-                literal.insert_after(element);
+                literal.stack(element);
 
                 expect(literal._rect.insertAfter).toHaveBeenCalledWith(element);
             });
@@ -113,8 +113,20 @@ define(['regexper/literal', 'mock/paper', 'mock/element'], function(Literal, Pap
 
                 spyOn(literal._text, 'insertAfter');
 
-                literal.insert_after(element);
+                literal.stack(element);
 
+                expect(literal._text.insertAfter).toHaveBeenCalledWith(literal._rect);
+            });
+
+            it('does not reposition the rect element if element is passed in', function() {
+                var literal = new Literal(paper, structure('Test'));
+
+                spyOn(literal._rect, 'insertAfter');
+                spyOn(literal._text, 'insertAfter');
+
+                literal.stack(element);
+
+                expect(literal._rect.insertAfter).not.toHaveBeenCalled();
                 expect(literal._text.insertAfter).toHaveBeenCalledWith(literal._rect);
             });
 
