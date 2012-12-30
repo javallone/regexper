@@ -1,7 +1,7 @@
 define(['regexper'], function(Regexper) {
     var Element = function(attrs) {
         this.attrs = {};
-        this.attr(attrs);
+        this.attr(attrs || {});
 
         this.setDimensions(this.attrs.width || 0, this.attrs.height || 0);
     };
