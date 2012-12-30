@@ -19,6 +19,7 @@
   <div id="paper-container"></div>
 
   <script src="/assets/raphael-min.js"></script>
+  <script src="/assets/require.js"></script>
   <script src="/assets/microajax.js"></script>
   <script src="/assets/lib.js"></script>
   <script src="/assets/element.js"></script>
@@ -31,6 +32,10 @@
   <script src="/assets/vbox.js"></script>
 
   <script>
+    require.config({
+        baseUrl: '/assets'
+    });
+
     (function() {
       function drawStructure(id, rexp) {
         Raphael(id, 320, 240, function() {
