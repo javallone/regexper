@@ -97,5 +97,22 @@ define(['regexper/base', 'mock/element'], function(Base, Element) {
 
         });
 
+        describe('.complete', function() {
+
+            it('calls the passed function after _mark_complete is called', function() {
+                var base = new Base(),
+                    complete = jasmine.createSpy('complete');
+
+                base.complete(complete);
+
+                expect(complete).not.toHaveBeenCalled();
+
+                base._mark_complete();
+
+                expect(complete).toHaveBeenCalled();
+            });
+
+        });
+
     });
 });

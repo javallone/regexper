@@ -25,6 +25,8 @@ define(['regexper', 'regexper/base'], function(Regexper, Base) {
         this._rect.attr(base_rect_attrs);
 
         this._stack_order = [this._rect, this._text];
+
+        this._mark_complete();
     };
 
     Regexper.extend(AnyCharacter.prototype, Base.prototype, {
