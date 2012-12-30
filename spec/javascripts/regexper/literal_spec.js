@@ -1,4 +1,4 @@
-define(['regexper/literal', 'mock/paper', 'mock/element'], function(Literal, Paper, Element) {
+define(['regexper/literal', 'mock/paper'], function(Literal, Paper) {
     var paper;
 
     function structure(content) {
@@ -12,6 +12,12 @@ define(['regexper/literal', 'mock/paper', 'mock/element'], function(Literal, Pap
 
         beforeEach(function() {
             paper = new Paper();
+        });
+
+        it('sets the stack order', function() {
+            var literal = new Literal(paper, structure('Test'));
+
+            expect(literal._stack_order).toEqual([literal._rect, literal._text]);
         });
 
         describe('text element', function() {
@@ -94,67 +100,12 @@ define(['regexper/literal', 'mock/paper', 'mock/element'], function(Literal, Pap
 
         });
 
-        describe('.stack', function() {
-
-            it('inserts the rect element after the element passed in', function() {
-                var literal = new Literal(paper, structure('Test')),
-                    element = new Element({});
-
-                spyOn(literal._rect, 'insertAfter');
-
-                literal.stack(element);
-
-                expect(literal._rect.insertAfter).toHaveBeenCalledWith(element);
-            });
-
-            it('inserts the text element after the rect element', function() {
-                var literal = new Literal(paper, structure('Test')),
-                    element = new Element({});
-
-                spyOn(literal._text, 'insertAfter');
-
-                literal.stack(element);
-
-                expect(literal._text.insertAfter).toHaveBeenCalledWith(literal._rect);
-            });
-
-            it('does not reposition the rect element if element is passed in', function() {
-                var literal = new Literal(paper, structure('Test'));
-
-                spyOn(literal._rect, 'insertAfter');
-                spyOn(literal._text, 'insertAfter');
-
-                literal.stack(element);
-
-                expect(literal._rect.insertAfter).not.toHaveBeenCalled();
-                expect(literal._text.insertAfter).toHaveBeenCalledWith(literal._rect);
-            });
-
-        });
-
         describe('.get_box', function() {
 
             it('returns the rect element\'s bounding box', function() {
                 var literal = new Literal(paper, structure('Test'));
 
                 expect(literal.get_box()).toEqual(literal._rect.getBBox());
-            });
-
-        });
-
-        describe('.get_connections', function() {
-
-            it('returns the left and right connection points', function() {
-                var literal = new Literal(paper, structure('Test')),
-                    box;
-
-                literal.position(0, 0);
-                box = literal.get_box();
-
-                expect(literal.get_connections()).toEqual({
-                    left: { x: box.x, y: box.y + box.height / 2 },
-                    right: { x: box.x2, y: box.y + box.height / 2 }
-                });
             });
 
         });
