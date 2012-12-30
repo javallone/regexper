@@ -1,4 +1,4 @@
-define(['regexper'], function(Regexper) {
+define(['regexper', 'regexper/literal', 'mock/paper'], function(Regexper, Literal, Paper) {
     describe('Regexper', function() {
 
         describe('.extend', function() {
@@ -38,6 +38,25 @@ define(['regexper'], function(Regexper) {
 
                 expect(objA).toEqual({
                     attr: 'valueC'
+                });
+            });
+
+        });
+
+        describe('.render', function() {
+
+            it('calls the complete function with the constructed object', function(done) {
+                var paper = new Paper();
+
+                Regexper.render(paper, {
+                    type: 'literal',
+                    content: 'Test'
+                }, function(element) {
+                    expect(element.constructor).toEqual(Literal);
+                    expect(element._text.attrs.text).toEqual('"Test"');
+                    expect(paper.text).toHaveBeenCalled();
+                    expect(paper.rect).toHaveBeenCalled();
+                    done();
                 });
             });
 

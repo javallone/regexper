@@ -8,6 +8,18 @@ define(function() {
                     target[key] = arguments[i][key];
                 }
             }
+        },
+
+        render: function(paper, structure, complete) {
+            var module_name = 'regexper/' + structure.type,
+                module;
+
+            require([module_name], function(Module) {
+                module = new Module(paper, structure);
+                module.complete(function() {
+                    complete(module);
+                });
+            });
         }
     };
 
