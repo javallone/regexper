@@ -55,20 +55,6 @@
     }
 
     (function() {
-      function drawStructure(id, rexp) {
-        Raphael(id, 320, 240, function() {
-          var expression, box;
-
-          expression = render(this, rexp.structure);
-
-          expression.stack();
-          expression.position(10, 10);
-
-          box = expression.get_box();
-          this.setSize(box.width + 20, box.height + 20);
-        });
-      }
-
       var form = document.getElementsByTagName("form")[0],
         input = form.getElementsByTagName("input")[0],
         error = document.getElementById("error"),
@@ -80,7 +66,7 @@
 
         new microAjax("/parse", function(text) {
           if (this.request.status == 200) {
-            drawStructure(paper_container, JSON.parse(text));
+            draw_structure(paper_container, JSON.parse(text).structure);
           } else if (this.request.status == 400) {
             error.innerHTML = JSON.parse(text).error;
           }
