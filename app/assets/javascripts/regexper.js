@@ -1,4 +1,12 @@
 define(function() {
+    var base_path_attrs = {
+            'stroke-width': 2
+        },
+        base_anchor_attrs = {
+            fill: '#6b6659',
+            'stroke-width': 2
+        };
+
     var Regexper = {
         extend: function(target) {
             var i, key;
@@ -8,6 +16,41 @@ define(function() {
                     target[key] = arguments[i][key];
                 }
             }
+        },
+
+        draw: function(paper_container, data) {
+            Raphael(paper_container, 0, 0, function() {
+                var paper = this;
+
+                Regexper.render(paper, data.structure, function(expression) {
+                    var box, offset,
+                        x = 20,
+                        y = 10;
+
+                    expression.stack();
+                    expression.position(20, 10);
+
+                    box = expression.get_box();
+                    offset = expression.get_connection_offset();
+
+                    Regexper.draw_anchor(paper, 10, box.y + offset, box.x);
+                    Regexper.draw_anchor(paper, box.x2 + 10, box.y + offset, box.x2);
+
+                    paper.setSize(box.width + 40, box.height + 20);
+                });
+            });
+        },
+
+        draw_anchor: function(paper, x, y, connection) {
+            paper.path(Raphael.fullfill('M{start.x},{start.y}H{end}', {
+                start: {
+                    x: x,
+                    y: y
+                },
+                end: connection
+            })).attr(base_path_attrs);
+
+            paper.circle(x, y, 5).attr(base_anchor_attrs);
         },
 
         render: function(paper, structure, complete) {

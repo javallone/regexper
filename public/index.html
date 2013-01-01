@@ -11,8 +11,8 @@
   <h1>Regexper</h1>
   <span>You thought you only had two problems...</span>
 
-  <form method="POST" action="/parser">
-    <input type="text" /><button type="submit">Draw</button>
+  <form id="regexp_form" method="POST" action="/parse">
+    <input id="regexp_input" type="text" /><button type="submit">Draw</button>
   </form>
 
   <div id="error"></div>
@@ -28,53 +28,21 @@
         baseUrl: '/assets'
     });
 
-    function draw_structure(id, structure) {
-        Raphael(id, 320, 240, function() {
-            var paper = this;
-
-            require(['regexper'], function(Regexper) {
-                Regexper.render(paper, structure, function(expression) {
-                    var box, offset;
-
-                    expression.stack();
-                    expression.position(10, 10);
-
-                    box = expression.get_box();
-                    offset = expression.get_connection_offset();
-
-                    paper.rect(box.x - 5, box.y - 5, box.width + 10, box.height + 10).attr({
-                        stroke: '#00ff00'
-                    });
-
-                    paper.circle(box.x, box.y + offset, 2).attr({
-                        fill: '#ff0000',
-                        stroke: '#ff0000'
-                    });
-
-                    paper.circle(box.x2, box.y + offset, 2).attr({
-                        fill: '#ff0000',
-                        stroke: '#ff0000'
-                    });
-
-                    paper.setSize(box.width + 20, box.height + 20);
-                });
-            });
-        });
-    }
-
     (function() {
-      var form = document.getElementsByTagName("form")[0],
-        input = form.getElementsByTagName("input")[0],
-        error = document.getElementById("error"),
-        paper_container = document.getElementById("paper-container");
+      var form = document.getElementById('regexp_form'),
+        input = document.getElementById('regexp_input'),
+        error = document.getElementById('error'),
+        paper_container = document.getElementById('paper-container');
 
       form.onsubmit = function() {
-        paper_container.innerHTML = "";
-        error.innerHTML = "";
+        paper_container.innerHTML = '';
+        error.innerHTML = '';
 
-        new microAjax("/parse", function(text) {
+        new microAjax(form.action, function(text) {
           if (this.request.status == 200) {
-            draw_structure(paper_container, JSON.parse(text).structure);
+            require(['regexper'], function(Regexper) {
+                Regexper.draw(paper_container, JSON.parse(text));
+            });
           } else if (this.request.status == 400) {
             error.innerHTML = JSON.parse(text).error;
           }
