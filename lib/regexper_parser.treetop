@@ -98,8 +98,10 @@ grammar Regexper
       vertical_tab_character /
       word_character /
       non_word_character /
+      octal_character /
       hex_character /
       unicode_character /
+      null_character /
       .
     ) <EscapedCharacter>
   end
@@ -132,8 +134,11 @@ grammar Regexper
       vertical_tab_character /
       word_character /
       non_word_character /
+      back_reference /
+      octal_character /
       hex_character /
       unicode_character /
+      null_character /
       .
     ) <EscapedCharacter>
   end
@@ -198,11 +203,23 @@ grammar Regexper
     'c' code:(.) <ControlCharacter>
   end
 
+  rule back_reference
+    [1-9] <BackReference>
+  end
+
+  rule octal_character
+    '0' code:([0-7]+) <OctalCharacter>
+  end
+
   rule hex_character
     'x' code:([0-9a-fA-F] 2..2) <HexCharacter>
   end
 
   rule unicode_character
     'u' code:([0-9a-fA-F] 4..4) <UnicodeCharacter>
+  end
+
+  rule null_character
+    '0' <NullCharacter>
   end
 end

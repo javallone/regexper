@@ -341,6 +341,24 @@ module Regexper
     end
   end
 
+  module BackReference
+    def to_obj
+      {
+        :type => :back_reference,
+        :code => text_value.to_i
+      }
+    end
+  end
+
+  module OctalCharacter
+    def to_obj
+      {
+        :type => :octal,
+        :code => code.text_value
+      }
+    end
+  end
+
   module HexCharacter
     def to_obj
       {
@@ -356,6 +374,12 @@ module Regexper
         :type => :unicode,
         :code => code.text_value.upcase
       }
+    end
+  end
+
+  module NullCharacter
+    def to_obj
+      :null
     end
   end
 end

@@ -538,6 +538,22 @@ describe "Regexper modules" do
       }
     end
 
+    it "supports \\N as a :back_reference escape" do
+      match_for('\\1').to_obj.should == {
+        :type => :escaped,
+        :range => [0, 2],
+        :content => { :type => :back_reference, :code => 1 }
+      }
+    end
+
+    it "supports \\0NNN as an :octal code escape" do
+      match_for('\\012').to_obj.should == {
+        :type => :escaped,
+        :range => [0, 4],
+        :content => { :type => :octal, :code => '12' }
+      }
+    end
+
     it "supports \\xNN as :hex code escape" do
       match_for('\\x1a').to_obj.should == {
         :type => :escaped,
@@ -551,6 +567,14 @@ describe "Regexper modules" do
         :type => :escaped,
         :range => [0, 6],
         :content => { :type => :unicode, :code => '12EF' }
+      }
+    end
+
+    it "supports \\0 as a :null escape" do
+      match_for('\\0').to_obj.should == {
+        :type => :escaped,
+        :range => [0, 2],
+        :content => :null
       }
     end
 
