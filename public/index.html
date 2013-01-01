@@ -12,8 +12,9 @@
 
     <link rel="author" href="humans.txt" />
 
-    <link rel="stylesheet" href="/assets/normalize.min.css">
-    <link rel="stylesheet" href="/assets/main.css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Bangers" />
+    <link rel="stylesheet" href="/assets/normalize.min.css" />
+    <link rel="stylesheet" href="/assets/main.css" />
 
     <!--[if lt IE 9]>
         <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -24,16 +25,22 @@
 
 <body>
 
-    <h1>Regexper</h1>
-    <span>You thought you only had two problems...</span>
+    <section id="header">
+        <h1>Regexper</h1>
+        <!-- n. One who regexpes -->
+        <span>You thought you only had two problems...</span>
+    </section>
 
-    <form id="regexp_form" method="POST" action="/parse">
-        <input id="regexp_input" type="text" /><button type="submit">Draw</button>
-    </form>
+    <section id="content"><div class="container">
+        <form id="regexp_form" method="POST" action="/parse">
+            <input id="regexp_input" type="text" autofocus="autofocus" placeholder="Enter JavaScript-style regular expression to display" />
+            <button type="submit">Draw</button>
+        </form>
 
-    <div id="error"></div>
+        <div id="error"></div>
 
-    <div id="paper-container"></div>
+        <div id="paper-container"></div>
+    </div></section>
 
     <script src="/assets/vendor/raphael-min.js"></script>
     <script src="/assets/vendor/require.js"></script>
