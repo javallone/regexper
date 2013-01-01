@@ -282,9 +282,9 @@ describe "Regexper modules" do
 
       it "returns the index of the group for :capture sub-expressions" do
         groups = Regexper.parse('(zero)((two)one)').content[0].content
-        groups[0].capture_group.should == 0
-        groups[1].capture_group.should == 1
-        groups[1].content[0].content[0].capture_group.should == 2
+        groups[0].capture_group.should == 1
+        groups[1].capture_group.should == 2
+        groups[1].content[0].content[0].capture_group.should == 3
       end
 
     end
@@ -302,7 +302,7 @@ describe "Regexper modules" do
       end
 
       it "includes the capture group as :group" do
-        capturing.to_obj[:group].should == 0
+        capturing.to_obj[:group].should == 1
       end
 
       describe "the :kind value" do
