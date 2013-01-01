@@ -1,4 +1,4 @@
-define(['regexper', 'regexper/base', 'regexper/text_box'], function(Regexper, Base, TextBox) {
+define(['regexper', 'regexper/text_box'], function(Regexper, TextBox) {
     var base_text_attrs = {
             'font-size': 12,
             fill: '#ffffff'
@@ -10,16 +10,11 @@ define(['regexper', 'regexper/base', 'regexper/text_box'], function(Regexper, Ba
         };
 
     var AnyCharacter = function(paper, structure) {
-        Base.call(this);
         TextBox.call(this, paper, 'any character',
             base_text_attrs, base_rect_attrs);
-
-        this._stack_order = [this._rect, this._text];
-
-        this._mark_complete();
     };
 
-    Regexper.extend(AnyCharacter.prototype, Base.prototype, TextBox.prototype);
+    Regexper.extend(AnyCharacter.prototype, TextBox.prototype);
 
     return AnyCharacter;
 });

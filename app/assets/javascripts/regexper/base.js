@@ -1,13 +1,19 @@
 define(['regexper'], function(Regexper) {
     var Base = function() {
+        this._contents = [];
         this._stack_order = [];
         this._completes = [];
         this._completed = false;
+        this._x = 0;
+        this._y = 0;
+        this._width = 0;
+        this._height = 0;
     };
 
     Regexper.extend(Base.prototype, {
-        position: function() {
-            throw 'position method is not defined';
+        position: function(x, y) {
+            this._x = x;
+            this._y = y;
         },
 
         stack: function(relative) {
@@ -22,19 +28,25 @@ define(['regexper'], function(Regexper) {
                 this._stack_order[i].insertAfter(relative);
                 relative = this._stack_order[i];
             }
+
+            for (i = 0; i < this._contents.length; i++) {
+                this._contents[i].stack(relative);
+            }
         },
 
         get_box: function() {
-            throw 'get_box method is not defined';
+            return {
+                x: this._x,
+                y: this._y,
+                x2: this._x + this._width,
+                y2: this._y + this._height,
+                width: this._width,
+                height: this._height
+            };
         },
 
-        get_connections: function() {
-            var box = this.get_box();
-
-            return {
-                left: { x: box.x, y: box.y + box.height / 2 },
-                right: { x: box.x2, y: box.y + box.height / 2 }
-            };
+        get_connection_offset: function() {
+            return this._height / 2;
         },
 
         complete: function(complete) {

@@ -9,6 +9,7 @@
 <body>
 
   <h1>Regexper</h1>
+  <span>You thought you only had two problems...</span>
 
   <form method="POST" action="/parser">
     <input type="text" /><button type="submit">Draw</button>
@@ -21,15 +22,6 @@
   <script src="/assets/raphael-min.js"></script>
   <script src="/assets/require.js"></script>
   <script src="/assets/microajax.js"></script>
-  <script src="/assets/lib.js"></script>
-  <script src="/assets/element.js"></script>
-  <script src="/assets/container.js"></script>
-  <script src="/assets/text.js"></script>
-  <script src="/assets/blank.js"></script>
-  <script src="/assets/bounding_box.js"></script>
-  <script src="/assets/skip_line.js"></script>
-  <script src="/assets/hbox.js"></script>
-  <script src="/assets/vbox.js"></script>
 
   <script>
     require.config({
@@ -42,12 +34,28 @@
 
             require(['regexper'], function(Regexper) {
                 Regexper.render(paper, structure, function(expression) {
-                    var box;
+                    var box, offset;
 
                     expression.stack();
                     expression.position(10, 10);
 
                     box = expression.get_box();
+                    offset = expression.get_connection_offset();
+
+                    paper.rect(box.x - 5, box.y - 5, box.width + 10, box.height + 10).attr({
+                        stroke: '#00ff00'
+                    });
+
+                    paper.circle(box.x, box.y + offset, 2).attr({
+                        fill: '#ff0000',
+                        stroke: '#ff0000'
+                    });
+
+                    paper.circle(box.x2, box.y + offset, 2).attr({
+                        fill: '#ff0000',
+                        stroke: '#ff0000'
+                    });
+
                     paper.setSize(box.width + 20, box.height + 20);
                 });
             });

@@ -19,6 +19,27 @@ define(function() {
                     complete(module);
                 });
             });
+        },
+
+        render_contents: function(paper, contents, complete) {
+            function content_complete(index) {
+                return function(element) {
+                    result[index] = element;
+                    count--;
+
+                    if (count === 0) {
+                        complete(result);
+                    }
+                }
+            }
+
+            var i,
+                count = contents.length,
+                result = [];
+
+            for (i = 0; i < contents.length; i++) {
+                Regexper.render(paper, contents[i], content_complete(i));
+            }
         }
     };
 
