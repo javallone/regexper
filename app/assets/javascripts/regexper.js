@@ -19,7 +19,7 @@ define(function() {
         },
 
         draw: function(paper_container, data) {
-            Raphael(paper_container, 0, 0, function() {
+            Raphael(paper_container, 2, 2, function() {
                 var paper = this;
 
                 Regexper.render(paper, data.structure, function(expression) {
