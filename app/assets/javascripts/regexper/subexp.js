@@ -61,6 +61,8 @@ define(['regexper', 'regexper/base', 'regexper/regexp'], function(Regexper, Base
                     width: box.width + 2 * margin,
                     height: box.height + 2 * margin
                 });
+
+                self._width = Math.max(self._width, self._text.getBBox().width);
             }
 
             self._mark_complete();
