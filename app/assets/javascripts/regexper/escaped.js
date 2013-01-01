@@ -16,6 +16,12 @@ define(['regexper', 'regexper/text_box'], function(Regexper, TextBox) {
             case 'control':
                 label = 'Ctrl-' + structure.content.code;
                 break;
+            case 'back_reference':
+                label = 'Back reference (group = ' + structure.content.code + ')';
+                break;
+            case 'octal':
+                label = 'Octal: ' + structure.content.code;
+                break;
             case 'hex':
                 label = '0x' + structure.content.code;
                 break;
