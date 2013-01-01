@@ -5,6 +5,7 @@ $stdout.sync = true
 
 require 'bundler'
 require 'regexper'
+require 'redirector'
 require 'json'
 
 Bundler.require(:default, ENV['RACK_ENV'].to_sym)
@@ -51,6 +52,8 @@ map '/parse' do
     end
   }
 end
+
+use Redirector
 
 use Rack::Static, :urls => ["/"], :root => root.join("public")
 
