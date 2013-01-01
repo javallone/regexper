@@ -80,6 +80,10 @@ define(function() {
                 count = contents.length,
                 result = [];
 
+            if (count === 0) {
+                complete(result);
+            }
+
             for (i = 0; i < contents.length; i++) {
                 Regexper.render(paper, contents[i], content_complete(i));
             }

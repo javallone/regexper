@@ -35,16 +35,23 @@ define(['regexper', 'regexper/base'], function(Regexper, Base) {
                 self._height += box.height + item_spacing;
             }
 
-            self._height -= item_spacing;
+            if (self._contents.length > 0) {
+                self._height -= item_spacing;
+            }
+
             self._width += 2 * margin;
             self._height += 2 * margin;
+
+            box = self._label.getBBox();
+
+            self._width = Math.max(self._width, box.width);
 
             self._box.attr({
                 width: self._width,
                 height: self._height
             });
 
-            self._height += self._label.getBBox().height;
+            self._height += box.height;
 
             self._mark_complete();
         });
