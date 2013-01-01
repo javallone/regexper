@@ -1,57 +1,49 @@
+<!DOCTYPE html>
 <html>
 
 <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-  <title>Regexper</title>
+    <title>Regexper</title>
+
+    <meta name="description" content="Regular expression visualizer using railroad diagrams" />
+    <meta name="viewport" content="width=device-width" />
+
+    <link rel="stylesheet" href="/assets/normalize.min.css">
+    <link rel="stylesheet" href="/assets/main.css">
+
+    <!--[if lt IE 9]>
+        <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <script>window.html5 || document.write('<script src="/assets/vendor/html5shiv.js"><\/script>')</script>
+    <![endif]-->
 
 </head>
 
 <body>
 
-  <h1>Regexper</h1>
-  <span>You thought you only had two problems...</span>
+    <h1>Regexper</h1>
+    <span>You thought you only had two problems...</span>
 
-  <form id="regexp_form" method="POST" action="/parse">
-    <input id="regexp_input" type="text" /><button type="submit">Draw</button>
-  </form>
+    <form id="regexp_form" method="POST" action="/parse">
+        <input id="regexp_input" type="text" /><button type="submit">Draw</button>
+    </form>
 
-  <div id="error"></div>
+    <div id="error"></div>
 
-  <div id="paper-container"></div>
+    <div id="paper-container"></div>
 
-  <script src="/assets/raphael-min.js"></script>
-  <script src="/assets/require.js"></script>
-  <script src="/assets/microajax.js"></script>
+    <script src="/assets/vendor/raphael-min.js"></script>
+    <script src="/assets/vendor/require.js"></script>
+    <script src="/assets/vendor/microajax.js"></script>
+    <script src="/assets/main.js"></script>
 
-  <script>
-    require.config({
-        baseUrl: '/assets'
-    });
-
-    (function() {
-      var form = document.getElementById('regexp_form'),
-        input = document.getElementById('regexp_input'),
-        error = document.getElementById('error'),
-        paper_container = document.getElementById('paper-container');
-
-      form.onsubmit = function() {
-        paper_container.innerHTML = '';
-        error.innerHTML = '';
-
-        new microAjax(form.action, function(text) {
-          if (this.request.status == 200) {
-            require(['regexper'], function(Regexper) {
-                Regexper.draw(paper_container, JSON.parse(text));
-            });
-          } else if (this.request.status == 400) {
-            error.innerHTML = JSON.parse(text).error;
-          }
-        }, input.value);
-
-        return false;
-      };
-    }());
-  </script>
+    <script>
+        var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+        (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+        g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+        s.parentNode.insertBefore(g,s)}(document,'script'));
+    </script>
 
 </body>
 
