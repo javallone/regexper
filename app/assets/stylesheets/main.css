@@ -4,6 +4,10 @@ body {
     background: #6b6659;
 }
 
+a {
+    color: #000;
+}
+
 section {
     padding: 2em;
 }
