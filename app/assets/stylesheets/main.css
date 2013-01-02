@@ -70,6 +70,7 @@ header span {
     background: #fff;
     overflow: auto;
     width: 100%;
+    text-align: center;
 }
 
 footer {
