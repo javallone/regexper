@@ -13,3 +13,5 @@ namespace :spec do
     fail unless Kernel.system(jasmine_node.to_s, '--requireJsSetup', setup.to_s, spec_root.to_s)
   end
 end
+
+task :travis => ['spec', 'spec:jasmine']
