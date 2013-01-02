@@ -27,7 +27,7 @@ map '/parse' do
         200,
         {
           'Content-Type' => 'application/json',
-          'Cache-Control' => 'no-cache' # TODO: Is this right?
+          'Cache-Control' => 'no-cache'
         },
         [
           JSON.generate({
@@ -41,7 +41,7 @@ map '/parse' do
         400,
         {
           'Content-Type' => 'application/json',
-          'Cache-Control' => 'no-cache' # TODO: Is this right?
+          'Cache-Control' => 'no-cache'
         },
         [
           JSON.generate({
