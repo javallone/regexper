@@ -60,6 +60,7 @@ header span {
 #error {
     background: #d00;
     color: #fff;
+    text-indent: 0.5em;
     font-weight: bold;
 }
 
