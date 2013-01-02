@@ -10,6 +10,9 @@ require 'json'
 
 Bundler.require(:default, ENV['RACK_ENV'].to_sym)
 
+use Rack::Logger
+use Rack::CommonLogger
+
 map '/assets' do
   environment = Sprockets::Environment.new
   environment.append_path root.join('app/assets/javascripts')
@@ -22,13 +25,15 @@ map '/parse' do
   run lambda { |env|
     request = Rack::Request.new(env)
     regexp = request.body.read
+    headers = {
+      'Content-Type' => 'application/json',
+      'Cache-Control' => 'no-cache'
+    }
+
     begin
       [
         200,
-        {
-          'Content-Type' => 'application/json',
-          'Cache-Control' => 'no-cache'
-        },
+        headers,
         [
           JSON.generate({
             :raw_expr => regexp,
@@ -37,15 +42,24 @@ map '/parse' do
         ]
       ]
     rescue Regexper::ParseError => error
+      env['rack.logger'].error("Parse failed: (exception=\"#{error}\") (input=\"#{regexp}\")")
       [
         400,
-        {
-          'Content-Type' => 'application/json',
-          'Cache-Control' => 'no-cache'
-        },
+        headers,
         [
           JSON.generate({
             :error => error.to_s
+          })
+        ]
+      ]
+    rescue Exception => exception
+      env['rack.logger'].error("Unexpected error: #{exception}")
+      [
+        500,
+        headers,
+        [
+          JSON.generate({
+            :error => 'Server error'
           })
         ]
       ]

@@ -17,7 +17,7 @@ require.config({
             require(['regexper'], function(Regexper) {
                 Regexper.draw(paper_container, JSON.parse(text));
             });
-        } else if (this.request.status == 400) {
+        } else {
             error.innerHTML = JSON.parse(text).error;
         }
     }, input.value);
