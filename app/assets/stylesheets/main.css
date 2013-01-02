@@ -2,6 +2,7 @@ body {
     font-size: 1em;
     line-height: 1.4;
     background: #6b6659;
+    margin-bottom: 1em;
 }
 
 a {
@@ -14,7 +15,7 @@ section {
 
 header {
     background: #bada55;
-    padding: 2em;
+    padding: 1.5em 2em;
     box-shadow: 0 0 15px
 }
 
@@ -22,6 +23,7 @@ header h1 {
     font-family: 'Bangers', cursive;
     font-size: 3em;
     margin: 0;
+    line-height: 1em;
 }
 
 header span {
