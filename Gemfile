@@ -22,4 +22,5 @@ end
 group :development, :test do
   gem 'rspec'
   gem 'simplecov'
+  gem 'rake'
 end
