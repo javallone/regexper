@@ -8,19 +8,19 @@ section {
     padding: 2em;
 }
 
-#header {
+header {
     background: #bada55;
     padding: 2em;
     box-shadow: 0 0 15px
 }
 
-#header h1 {
+header h1 {
     font-family: 'Bangers', cursive;
     font-size: 3em;
     margin: 0;
 }
 
-#header span {
+header span {
     color: #6b6659;
 }
 
@@ -63,4 +63,29 @@ section {
     background: #fff;
     overflow: auto;
     width: 100%;
+}
+
+footer {
+    padding: 0 2em;
+    font-size: 12px;
+}
+
+footer ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+footer ul li {
+    display: inline-block;
+    border-right: 1px solid #000;
+    padding: 0 5px;
+}
+
+footer ul li.last {
+    border-right: 0 none;
+}
+
+footer img {
+    vertical-align: middle;
 }
