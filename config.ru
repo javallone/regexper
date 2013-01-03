@@ -38,7 +38,7 @@ map '/parse' do
           JSON.generate({
             :raw_expr => regexp,
             :structure => Regexper.parse(regexp).to_obj
-          })
+          }, :max_nesting => 1000)
         ]
       ]
     rescue Regexper::ParseError => error
@@ -49,6 +49,17 @@ map '/parse' do
         [
           JSON.generate({
             :error => error.to_s
+          })
+        ]
+      ]
+    rescue JSON::NestingError => error
+      env['rack.logger'].error("Excessive nesting: (exception=\"#{error}\") (input=\"#{regexp}\")")
+      [
+        500,
+        headers,
+        [
+          JSON.generate({
+            :error => "Regexp contains excessive nesting (error: #{error.to_s})"
           })
         ]
       ]
