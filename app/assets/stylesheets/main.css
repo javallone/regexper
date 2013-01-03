@@ -45,6 +45,8 @@ header span {
     padding: 0.25em 0;
     text-indent: 0.5em;
     width: 100%;
+
+    font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;
 }
 
 #content input::-webkit-input-placeholder {
