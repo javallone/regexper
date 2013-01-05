@@ -1,4 +1,12 @@
 grammar Regexper
+  rule root
+    regexp_literal / regexp
+  end
+
+  rule regexp_literal
+    '/' regexp '/' flags:[igm]* <RegexpLiteral>
+  end
+
   rule regexp
     match:(match) alternate:('|' regexp)? <Regexp>
   end
@@ -115,7 +123,7 @@ grammar Regexper
   end
 
   rule literal
-    [^|\\.\[\(\)\{\}?+*$^] <Literal>
+    [^|\\/.\[\(\)\{\}?+*$^] <Literal>
   end
 
   rule escaped_character

@@ -6,6 +6,24 @@ describe "Regexper modules" do
     Regexper.parse(regexp).content[0].content[0]
   end
 
+  describe Regexper::RegexpLiteral do
+
+    before :each do
+      @regexp = Regexper.parse('/test1|test2/')
+    end
+
+    describe "#to_obj" do
+
+      it "returns the object representation of the contained expression" do
+        obj = @regexp.to_obj
+        obj[:type].should == :regexp
+        obj[:content].length.should == 2
+      end
+
+    end
+
+  end
+
   describe Regexper::Regexp do
 
     before :each do

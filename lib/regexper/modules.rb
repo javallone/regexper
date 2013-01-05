@@ -1,4 +1,10 @@
 module Regexper
+  module RegexpLiteral
+    def to_obj
+      regexp.to_obj
+    end
+  end
+
   module Regexp
     def content
       if alternate.empty?
