@@ -1,3 +1,7 @@
+//=require vendor/raphael-min
+//=require vendor/require
+//=require vendor/microajax
+
 require.config({
     baseUrl: '/assets'
 });
