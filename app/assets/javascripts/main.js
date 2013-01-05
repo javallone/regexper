@@ -16,15 +16,21 @@ require.config({
         paper_container.innerHTML = '';
         error.innerHTML = '';
 
-        new microAjax(form.action, function(text) {
-            document.body.className = 'has-results';
+        document.body.className = 'is-loading';
 
+        new microAjax(form.action, function(text) {
             if (this.request.status == 200) {
+                document.body.className += ' has-results';
+
                 require(['regexper'], function(Regexper) {
-                    Regexper.draw(paper_container, JSON.parse(text));
+                    Regexper.draw(paper_container, JSON.parse(text), function() {
+                        document.body.className = 'has-results';
+                        console.log("DONE");
+                    });
                 });
             } else {
                 error.innerHTML = JSON.parse(text).error;
+                document.body.className = 'has-results';
             }
         }, input.value);
 

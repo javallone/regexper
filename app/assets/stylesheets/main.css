@@ -83,6 +83,17 @@ body.has-results #content .results {
     padding: 0;
 }
 
+#loading {
+    background: #fff;
+    text-align: center;
+    padding: 10px 0;
+    display: none;
+}
+
+body.is-loading #loading {
+    display: block;
+}
+
 #error {
     background: #d00;
     color: #fff;
@@ -95,6 +106,11 @@ body.has-results #content .results {
     overflow: auto;
     width: 100%;
     text-align: center;
+}
+
+body.is-loading #paper-container {
+    position: absolute;
+    top: -100px;
 }
 
 footer {

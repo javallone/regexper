@@ -18,7 +18,7 @@ define(function() {
             }
         },
 
-        draw: function(paper_container, data) {
+        draw: function(paper_container, data, complete) {
             Raphael(paper_container, 2, 2, function() {
                 var paper = this;
 
@@ -37,6 +37,8 @@ define(function() {
                     Regexper.draw_anchor(paper, box.x2 + 10, box.y + offset, box.x2);
 
                     paper.setSize(box.width + 40, box.height + 20);
+
+                    complete();
                 });
             });
         },
