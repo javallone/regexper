@@ -24,7 +24,7 @@ end
 map '/parse' do
   run lambda { |env|
     request = Rack::Request.new(env)
-    regexp = request.body.read
+    regexp = request.body.read.force_encoding('UTF-8')
     headers = {
       'Content-Type' => 'application/json',
       'Cache-Control' => 'no-cache'
