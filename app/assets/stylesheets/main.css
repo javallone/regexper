@@ -32,10 +32,21 @@ header span {
 
 #content .container {
     border: 1px solid #000;
+    position: relative;
 }
 
-#content button {
+#content .results {
+    border: 1px solid #000;
+    margin-top: 20px;
     display: none;
+}
+
+body.has-results #content .results {
+    display: block;
+}
+
+#content span {
+    margin-right: 100px;
 }
 
 #content input {
@@ -45,7 +56,6 @@ header span {
     padding: 0.25em 0;
     text-indent: 0.5em;
     width: 100%;
-
     font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;
 }
 
@@ -59,6 +69,18 @@ header span {
 
 #content input[placeholder]], [placeholder], *[placeholder] {
     color: #6b6659
+}
+
+#content button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100px;
+    height: 100%;
+    border: 0 none;
+    border-left: 1px solid #000;
+    background: #bada55;
+    padding: 0;
 }
 
 #error {

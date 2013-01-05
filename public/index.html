@@ -31,16 +31,22 @@
         <span>You thought you only had two problems...</span>
     </header>
 
-    <section id="content"><div class="container">
-        <form id="regexp_form" method="POST" action="/parse">
-            <input id="regexp_input" type="text" autofocus="autofocus" placeholder="Enter JavaScript-style regular expression to display" />
-            <button type="submit">Draw</button>
-        </form>
+    <section id="content">
+        <div class="container">
+            <form id="regexp_form" method="POST" action="/parse">
+                <span>
+                    <input id="regexp_input" type="text" autofocus="autofocus" placeholder="Enter JavaScript-style regular expression to display" />
+                </span>
+                <button type="submit">Display</button>
+            </form>
+        </div>
 
-        <div id="error"></div>
+        <div class="results">
+            <div id="error"></div>
 
-        <div id="paper-container"></div>
-    </div></section>
+            <div id="paper-container"></div>
+        </div>
+    </section>
 
     <footer>
         <ul>

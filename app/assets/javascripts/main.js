@@ -9,19 +9,21 @@ require.config({
         paper_container = document.getElementById('paper-container');
 
     form.onsubmit = function() {
-    paper_container.innerHTML = '';
-    error.innerHTML = '';
+        paper_container.innerHTML = '';
+        error.innerHTML = '';
 
-    new microAjax(form.action, function(text) {
-        if (this.request.status == 200) {
-            require(['regexper'], function(Regexper) {
-                Regexper.draw(paper_container, JSON.parse(text));
-            });
-        } else {
-            error.innerHTML = JSON.parse(text).error;
-        }
-    }, input.value);
+        new microAjax(form.action, function(text) {
+            document.body.className = 'has-results';
 
-    return false;
+            if (this.request.status == 200) {
+                require(['regexper'], function(Regexper) {
+                    Regexper.draw(paper_container, JSON.parse(text));
+                });
+            } else {
+                error.innerHTML = JSON.parse(text).error;
+            }
+        }, input.value);
+
+        return false;
     };
 }());
