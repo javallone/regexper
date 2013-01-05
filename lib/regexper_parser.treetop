@@ -20,7 +20,7 @@ grammar Regexper
   end
 
   rule match
-    anchor_start:anchor_start? match:(
+    anchor_start:anchor_start? (!repetition_count) match:(
       repetition /
       subexp /
       charset /
@@ -123,7 +123,7 @@ grammar Regexper
   end
 
   rule literal
-    [^|\\/.\[\(\)\{\}?+*$^] <Literal>
+    [^|\\/.\[\(\)?+*$^] <Literal>
   end
 
   rule escaped_character

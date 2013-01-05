@@ -34,8 +34,8 @@ describe Regexper do
         lambda { Regexper.parse('{1,2}') }.should raise_error
       end
 
-      it "raises an exception for empty '{}' syntax" do
-        lambda { Regexper.parse('x{}') }.should raise_error
+      it "does not raise an exception for empty '{}' syntax" do
+        lambda { Regexper.parse('x{}') }.should_not raise_error
       end
 
     end
