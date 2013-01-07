@@ -10,7 +10,8 @@ require.config({
     var form = document.getElementById('regexp_form'),
         input = document.getElementById('regexp_input'),
         error = document.getElementById('error'),
-        paper_container = document.getElementById('paper-container');
+        paper_container = document.getElementById('paper-container'),
+        permalink = document.getElementById('permalink');
 
     form.onsubmit = function() {
         paper_container.innerHTML = '';
@@ -36,4 +37,16 @@ require.config({
 
         return false;
     };
+
+    input.onchange = function() {
+        permalink.href = "/#"+encodeURIComponent(input.value);
+    }
+
+    window.onload = function() {
+        var hash = window.location.hash;
+        if (hash !== undefined && hash.length > 0) {
+            input.value = decodeURIComponent(hash.split("#")[1]);
+            form.onsubmit();
+        }
+    }
 }());
