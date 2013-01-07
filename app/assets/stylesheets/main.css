@@ -137,3 +137,23 @@ footer ul li.last {
 footer img {
     vertical-align: middle;
 }
+
+.permalink {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}
+
+.permalink a {
+    height: 29px;
+    width: 29px;
+    line-height: 29px;
+    display: inline-block;
+    background-color: #bada55;
+    border-left: 1px solid black;
+}
+
+.permalink img {
+    vertical-align: middle;
+    margin-left: 5px;
+}
