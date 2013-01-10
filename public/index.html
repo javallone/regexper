@@ -12,6 +12,7 @@
 
     <link rel="author" href="humans.txt" />
 
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" />
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Bangers" />
     <link rel="stylesheet" href="/assets/normalize.min.css" />
     <link rel="stylesheet" href="/assets/main.css" />
@@ -32,7 +33,7 @@
     </header>
 
     <section id="content"><div class="container">
-        <form id="regexp_form" method="POST" action="/parse">
+    	<form id="regexp_form" method="POST" action="/parse">
             <input id="regexp_input" type="text" autofocus="autofocus" placeholder="Enter JavaScript-style regular expression to display" />
             <button type="submit">Draw</button>
         </form>
@@ -40,14 +41,147 @@
         <div id="error"></div>
 
         <div id="paper-container"></div>
-    </div></section>
+    	<div>
+    		<h3>Regex quick reference</h3>
+    	</div>
+        <div id="quickref">
+
+				  <div style="float:left">
+				
+				    <table>
+				      <tbody><tr>
+				        <td><code>[abc]</code></td>
+				        <td>A single character of: a, b or c</td>
+				      </tr>
+				      <tr>
+				        <td><code>[^abc]</code></td>
+				        <td>Any single character except: a, b, or c</td>
+				      </tr>
+				      <tr>
+				        <td><code>[a-z]</code></td>
+				        <td>Any single character in the range a-z</td>
+				      </tr>
+				      <tr>
+				        <td><code>[a-zA-Z]</code></td>
+				        <td>Any single character in the range a-z or A-Z</td>
+				      </tr>
+				      <tr>
+				        <td><code>^</code></td>
+				        <td>Start of line</td>
+				      </tr>
+				      <tr>
+				        <td><code>$</code></td>
+				        <td>End of line</td>
+				      </tr>
+				      <tr>
+				        <td><code>\A</code></td>
+				        <td>Start of string</td>
+				      </tr>
+				      <tr>
+				        <td><code>\z</code></td>
+				        <td>End of string</td>
+				      </tr>
+				    </tbody></table>
+				  </div>
+				  
+				  <div style="float:left">
+				    <table>
+				      <tbody><tr>
+				        <td><code>.</code></td>
+				        <td>Any single character</td>
+				      </tr>
+				    <tr>
+				      <td><code>\s</code></td>
+				      <td>Any whitespace character</td>
+				    </tr>
+				    <tr>
+				      <td><code>\S</code></td>
+				      <td>Any non-whitespace character</td>
+				    </tr>
+				    <tr>
+				      <td><code>\d</code></td>
+				      <td>Any digit</td>
+				    </tr>
+				    <tr>
+				      <td><code>\D</code></td>
+				      <td>Any non-digit</td>
+				    </tr>
+				    <tr>
+				      <td><code>\w</code></td>
+				      <td>Any word character (letter, number, underscore)</td>
+				    </tr>
+				    <tr>
+				      <td><code>\W</code></td>
+				      <td>Any non-word character</td>
+				    </tr>
+				    <tr>
+				      <td><code>\b</code></td>
+				      <td>Any word boundary</td>
+				    </tr>
+				  </tbody></table>
+				</div>
+				
+				<table>
+				  <tbody><tr>
+				    <td><code>(...)</code></td>
+				    <td>Capture everything enclosed</td>
+				  </tr>
+				  <tr>
+				    <td><code>(a|b)</code></td>
+				    <td>a or b</td>
+				  </tr>
+				  <tr>
+				    <td><code>a?</code></td>
+				    <td>Zero or one of a</td>
+				  </tr>
+				  <tr>
+				    <td><code>a*</code></td>
+				    <td>Zero or more of a</td>
+				  </tr>
+				  <tr>
+				    <td><code>a+</code></td>
+				    <td>One or more of a</td>
+				  </tr>
+				  <tr>
+				    <td><code>a{3}</code></td>
+				    <td>Exactly 3 of a</td>
+				  </tr>
+				  <tr>
+				    <td><code>a{3,}</code></td>
+				    <td>3 or more of a</td>
+				  </tr>
+				  <tr>
+				    <td><code>a{3,6}</code></td>
+				    <td>Between 3 and 6 of a</td>
+				  </tr>        
+				</tbody></table>
+				
+				<div style="text-align:center" id="regex_options">
+					<p>
+						options:
+						<code>i</code> case insensitive
+						<code>m</code> make dot match newlines
+						<code>x</code> ignore whitespace in regex
+						<code>o</code> perform #{...} substitutions only once
+					</p>
+				</div>
+				<div id="ref">
+					<a href="http://rubular.com/" target="_blank">reference from rubular</a>
+				</div>
+				</div>
+    
+    </div>
+    
+    </section>
 
     <footer>
         <ul>
             <li>Created by <a href="mailto:jeff.avallone@gmail.com">Jeff Avallone</a></li>
-            <li class="last"><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_US">
-                <img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/80x15.png" />
-            </a></li>
+            <li class="last">
+            	<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_US">
+                	<img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/80x15.png" />
+            	</a>
+            </li>
         </ul>
     </footer>
 

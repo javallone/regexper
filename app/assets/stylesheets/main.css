@@ -31,7 +31,7 @@ header span {
 }
 
 #content .container {
-    border: 1px solid #000;
+    border: 0px solid #000;
 }
 
 #content button {
@@ -96,4 +96,31 @@ footer ul li.last {
 
 footer img {
     vertical-align: middle;
+}
+
+#quickref {
+    background-color: #E6E6E6;
+    border: 10px solid #5E5D5E;
+    font-size: 13px;
+    padding: 5px;
+    text-align: left;
+}
+
+#ref {
+	font-size: 10px;
+	text-align: middle;
+}
+
+code {
+    font-family: monaco,courier;
+    font-weight: bold;
+	color: #000000 !important;
+}
+
+h3 {
+    color: #FFFFFF;
+    font-size: 22px;
+    font-weight: normal;
+    margin-bottom: 10px;
+    margin-top: 22px;
 }
