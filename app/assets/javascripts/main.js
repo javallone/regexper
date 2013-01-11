@@ -10,7 +10,7 @@ require.config({
     var form = document.getElementById('regexp_form'),
         input = document.getElementById('regexp_input'),
         error = document.getElementById('error'),
-        hash = window.location.hash.split("#")[1],
+        hash = window.location.hash.slice(1),
         paper_container = document.getElementById('paper-container');
 
     function on_submit() {
