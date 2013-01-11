@@ -10,9 +10,10 @@ require.config({
     var form = document.getElementById('regexp_form'),
         input = document.getElementById('regexp_input'),
         error = document.getElementById('error'),
+        hash = window.location.hash.slice(1),
         paper_container = document.getElementById('paper-container');
 
-    form.onsubmit = function() {
+    function on_submit() {
         paper_container.innerHTML = '';
         error.innerHTML = '';
 
@@ -25,6 +26,7 @@ require.config({
                 require(['regexper'], function(Regexper) {
                     Regexper.draw(paper_container, JSON.parse(text), function() {
                         document.body.className = 'has-results';
+                        window.location.hash = input.value;
                         console.log("DONE");
                     });
                 });
@@ -35,5 +37,12 @@ require.config({
         }, input.value);
 
         return false;
-    };
+    }
+    form.onsubmit = on_submit
+
+    if (!!hash) {
+        input.value = hash;
+        on_submit();
+    }
+
 }());
