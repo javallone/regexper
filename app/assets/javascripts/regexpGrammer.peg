@@ -1,0 +1,92 @@
+grammar Regexper
+  root <- regexp_literal / regexp
+
+  regexp_literal <- "/" regexp "/" flags:[igm]* <RegexpLiteral>
+
+  regexp <- match:(match) alternate:("|" regexp)? <Regexp>
+
+  anchor_start <- "^"
+
+  anchor_end <- "$"
+
+  match <-  anchor_start:anchor_start? (!repetition_count) match:(repetition / subexp / charset / terminal )* anchor_end:anchor_end? <Match>
+
+  repetition <-  match:(subexp / charset / terminal) repetition_count <Repetition>
+
+  repetition_count <- repeat:(repeat_any / repeat_required / repeat_optional / repeat_spec) greedy:repeat_greedy_flag? <RepetitionCount>
+
+  repeat_any <- "*" <RepeatAny>
+
+  repeat_required <-     "+" <RepeatRequired>
+
+  repeat_optional <-     "?" <RepeatOptional>
+
+  repeat_spec <-  "{" start:([0-9]+) "," stop:([0-9]+) "}" <RepeatSpecFull> / "{," stop:([0-9]+) "}" <RepeatSpecUpTo> / "{" start:([0-9]+) ",}" <RepeatSpecAtLeast> / "{" value:([0-9]+) "}" <RepeatSpecExact>
+
+  repeat_greedy_flag <-  "?"
+
+  subexp <- "(" flag:(subexp_no_capture / subexp_positive_lookahead / subexp_negative_lookahead)? regexp ")" <Subexp>
+
+  subexp_no_capture <- "?:" <SubexpNoCapture>
+
+  subexp_positive_lookahead <- "?=" <SubexpPositiveLookahead>
+
+  subexp_negative_lookahead <- "?!" <SubexpNegativeLookahead>
+
+  charset <- "[" invert:"^"? match_spec:(charset_range / charset_terminal)* "]" <Charset>
+
+  charset_range <- start:charset_terminal "-" stop:charset_terminal <CharsetRange>
+
+  charset_terminal <- charset_escaped_character / charset_literal
+
+  charset_literal <- [^\\\]] <Literal>
+
+  charset_escaped_character <- "\\" escape:( backspace_character / control_character / digit_character / non_digit_character / form_feed_character / line_feed_character / carriage_return_character / white_space_character / non_white_space_character / tab_character / vertical_tab_character / word_character / non_word_character / octal_character / hex_character / unicode_character / null_character / . ) <EscapedCharacter>
+
+  terminal <- any_character / escaped_character / literal
+
+  any_character <- "." <AnyCharacter>
+
+  literal <- [^|\\/.\[\(\)?+*$^] <Literal>
+
+  escaped_character <-  "\\" escape:(  word_boundary_character /  non_word_boundary_character /  control_character /  digit_character /  non_digit_character /  form_feed_character /  line_feed_character /  carriage_return_character /  white_space_character /  non_white_space_character /  tab_character /  vertical_tab_character /  word_character /  non_word_character /  back_reference /  octal_character /  hex_character /  unicode_character /  null_character /  .  ) <EscapedCharacter>
+
+  backspace_character <- "b" <BackspaceCharacter>
+
+  word_boundary_character <- "b" <WordBoundaryCharacter>
+
+  non_word_boundary_character <- "B" <NonWordBoundaryCharacter>
+
+  digit_character <- "d" <DigitCharacter>
+
+  non_digit_character <- "D" <NonDigitCharacter>
+
+  form_feed_character <- "f" <FormFeedCharacter>
+
+  line_feed_character <- "n" <LineFeedCharacter>
+
+  carriage_return_character <- "r" <CarriageReturnCharacter>
+
+  white_space_character <- "s" <WhiteSpaceCharacter>
+
+  non_white_space_character <- "S" <NonWhiteSpaceCharacter>
+
+  tab_character <- "t" <TabCharacter>
+
+  vertical_tab_character <- "v" <VerticalTabCharacter>
+
+  word_character <- "w" <WordCharacter>
+
+  non_word_character <- "W" <NonWordCharacter>
+
+  control_character <- "c" code:(.) <ControlCharacter>
+
+  back_reference <- [1-9] <BackReference>
+
+  octal_character <- "0" code:([0-7]+) <OctalCharacter>
+
+  hex_character <- "x" code:([0-9a-fA-F]+) <HexCharacter>
+
+  unicode_character <- "u" code:([0-9a-fA-F]+) <UnicodeCharacter>
+
+  null_character <- "0" <NullCharacter>

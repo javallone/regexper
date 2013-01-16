@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>Regexper</title>
+
+    <meta name="description" content="Regular expression visualizer using railroad diagrams" />
+    <meta name="viewport" content="width=device-width" />
+
+    <link rel="author" href="humans.txt" />
+
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Bangers" />
+    <link rel="stylesheet" href="/assets/stylesheets/normalize.min.css" />
+    <link rel="stylesheet" href="/assets/stylesheets/main.css" />
+
+    <!--[if lt IE 9]>
+        <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <script>window.html5 || document.write('<script src="/assets/javscripts/vendor/html5shiv.js"><\/script>')</script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <header>
+        <h1>Regexper</h1>
+        <!-- n. One who regexpes -->
+        <span>You thought you only had two problems...</span>
+    </header>
+
+    <section id="content">
+        <div class="container">
+            <form id="regexp_form" method="POST" action="/parse">
+                <span>
+                    <input id="regexp_input" type="text" autofocus="autofocus" placeholder="Enter JavaScript-style regular expression to display" />
+                </span>
+                <button type="submit">Display</button>
+            </form>
+        </div>
+        <div id="error"></div>
+        <div class="results">
+            <div id="loading">
+                <img src="/assets/images/loader.gif" alt="Loading" />
+            </div>
+
+
+            <div id="paper-container"></div>
+        </div>
+    </section>
+
+    <footer>
+        <ul>
+            <li>Created by <a href="mailto:jeff.avallone@gmail.com">Jeff Avallone</a></li>
+            <li>Modified for real time updates by <a href="#">Iftah Haimovitch</a></li>
+            <li class="last"><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_US">
+                <img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/80x15.png" />
+            </a></li>
+        </ul>
+    </footer>
+
+    <a href="https://github.com/javallone/regexper">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub">
+    </a>
+
+    <script src="/assets/javascripts/regexper/any_character.js"></script>
+    <script src="/assets/javascripts/regexper/base.js"></script>
+    <script src="/assets/javascripts/regexper/charset.js"></script>
+    <script src="/assets/javascripts/regexper/escaped.js"></script>
+    <script src="/assets/javascripts/regexper/literal.js"></script>
+    <script src="/assets/javascripts/regexper/match.js"></script>
+    <script src="/assets/javascripts/regexper/range.js"></script>
+    <script src="/assets/javascripts/regexper/regexp.js"></script>
+    <script src="/assets/javascripts/regexper/repetition.js"></script>
+    <script src="/assets/javascripts/regexper/subexp.js"></script>
+    <script src="/assets/javascripts/regexper/text_box.js"></script>
+
+    <script src="/assets/javascripts/vendor/raphael-min.js"></script>
+    <script src="/assets/javascripts/regexper.js"></script>
+    <script src="/assets/javascripts/grammerClasses.js"></script>
+    <script src="/assets/javascripts/regexpGrammer.js"></script>
+    <script src="/assets/javascripts/main.js"></script>
+
+</body>
+
+</html>
