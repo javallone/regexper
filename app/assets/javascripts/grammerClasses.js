@@ -10,7 +10,7 @@ RegexperClasses = {
         if (this.alternate.textValue.length == 0)
             return [this.match]
         else
-            return [this.match, this.alternate.regexp.content()];
+            return [this.match].concat(this.alternate.regexp.content());
     },
 
     to_obj: function() {
