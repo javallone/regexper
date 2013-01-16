@@ -4,6 +4,9 @@
 
 Code for the http://www.regexper.com/ site.
 
+## This Fork
+This fork was modified by Iftah Haimovitch, it features real time client side parsing of the regular expression! No Ruby and no server side processing is needed.
+
 ## Contributing
 
 I greatly appreciate any contributions that you may have for the site. Feel free to fork the project and work on any of the reported issues, or let me know about any improvements you think would be beneficial.
