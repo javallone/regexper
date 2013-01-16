@@ -196,7 +196,7 @@ RegexperClasses = {
           return this.invert.textValue == '^'
       },
       content: function() {
-          return match_spec.elements;
+          return this.match_spec.elements;
       },
       to_obj: function() {
           var content = this.content();
