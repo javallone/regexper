@@ -1,39 +1,87 @@
 //=require vendor/raphael-min
 //=require vendor/require
 //=require vendor/microajax
+//=require vendor/canopy
 
-require.config({
-    baseUrl: '/assets'
-});
+//require.config({
+//    baseUrl: '/assets'
+//});
+
+modules = {}
 
 (function() {
-    var form = document.getElementById('regexp_form'),
-        input = document.getElementById('regexp_input'),
+
+    // ugly class loading, because I had problems setting up Require.js
+    var Renderer = getRenderer();
+    var base = getBase(Renderer);
+    var text_box = getTextBox(Renderer, base);
+    var charset = getCharset(Renderer, base);
+    var escaped = getEscaped(Renderer, text_box);
+    var literal = getLiteral(Renderer, text_box);
+    var match = getMatch(Renderer, base, text_box);
+    var range = getRange(Renderer, base);
+    var regexp = getRegexp(Renderer, base);
+    var repetition = getRepetition(Renderer, base);
+    var subexp = getSubexp(Renderer, base, regexp);
+
+    modules = {
+        charset: charset,
+        escaped: escaped,
+        literal: literal,
+        match: match,
+        range: range,
+        regexp: regexp,
+        repetition: repetition,
+        subexp: subexp
+    };
+
+    for (var k in RegexperClasses) {
+        RegexperParser[k] = RegexperClasses[k];
+    }
+
+    var input = document.getElementById('regexp_input'),
         error = document.getElementById('error'),
         paper_container = document.getElementById('paper-container');
 
-    form.onsubmit = function() {
+    var prev_input = null;
+
+    input.onkeyup = function() {
+        if (input.value === prev_input) {
+            return; // key hasn't changed text
+        }
+        prev_input = input.value;
         paper_container.innerHTML = '';
         error.innerHTML = '';
 
+        RegexperParser.Subexp.capture_group = 1;
+
         document.body.className = 'is-loading';
 
-        new microAjax(form.action, function(text) {
-            if (this.request.status == 200) {
-                document.body.className += ' has-results';
-
-                require(['regexper'], function(Regexper) {
-                    Regexper.draw(paper_container, JSON.parse(text), function() {
-                        document.body.className = 'has-results';
-                        console.log("DONE");
-                    });
-                });
-            } else {
-                error.innerHTML = JSON.parse(text).error;
-                document.body.className = 'has-results';
+        try {
+            var tree = RegexperParser.parse(input.value)
+            if (!tree) {
+                console.log("No tree!")
+                return;
             }
-        }, input.value);
+            var obj = tree.to_obj();
+            try {
+                document.body.className += ' has-results';
+                Renderer.draw(paper_container, {"raw_expr":input.value,"structure":obj} , function() {
+                    document.body.className = 'has-results';
+                });
+            }
+            catch(e) {
+                err = e;
+                error.innerHTML = "Exception drawing tree:<br> "+ e.stack.replace(/\n/g,"<br>");
+            }
+        }
+        catch(e) {
+            err = e;
+            error.innerHTML = "Exception running grammer:<br> "+ e.stack.replace(/\n/g,"<br>");
+        }
 
-        return false;
-    };
+
+    }
+
+
 }());

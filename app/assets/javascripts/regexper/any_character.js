@@ -1,4 +1,4 @@
-define(['regexper', 'regexper/text_box'], function(Regexper, TextBox) {
+getAnyChar = function(Regexper, TextBox) {
     var base_text_attrs = {
             'font-size': 12,
             fill: '#ffffff'
@@ -17,4 +17,4 @@ define(['regexper', 'regexper/text_box'], function(Regexper, TextBox) {
     Regexper.extend(AnyCharacter.prototype, TextBox.prototype);
 
     return AnyCharacter;
-});
+}

@@ -1,4 +1,4 @@
-define(['regexper', 'regexper/base'], function(Regexper, Base) {
+getRegexp = function(Regexper, Base) {
     var item_spacing = 10,
         curve_radius = 10,
         base_connector_attrs = {
@@ -127,4 +127,4 @@ define(['regexper', 'regexper/base'], function(Regexper, Base) {
     });
 
     return Regexp;
-});
+}

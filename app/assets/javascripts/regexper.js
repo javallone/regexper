@@ -1,4 +1,4 @@
-define(function() {
+getRenderer = function() {
     var base_path_attrs = {
             'stroke-width': 2
         },
@@ -56,13 +56,12 @@ define(function() {
         },
 
         render: function(paper, structure, complete) {
-            var module_name = 'regexper/' + structure.type;
+            var module_name = structure.type;
 
-            require([module_name], function(Module) {
-                var module = new Module(paper, structure);
-                module.complete(function() {
-                    complete(module);
-                });
+            var Module = modules[module_name];
+            var module = new Module(paper, structure);
+            module.complete(function() {
+                complete(module);
             });
         },
 
@@ -93,4 +92,4 @@ define(function() {
     };
 
     return Regexper;
-});
+}

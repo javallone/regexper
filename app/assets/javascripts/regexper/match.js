@@ -1,4 +1,4 @@
-define(['regexper', 'regexper/base', 'regexper/text_box'], function(Regexper, Base, TextBox) {
+getMatch = function(Regexper, Base, TextBox) {
     var item_spacing = 10,
         base_anchor_text_attrs = {
             'font-size': 12,
@@ -105,4 +105,4 @@ define(['regexper', 'regexper/base', 'regexper/text_box'], function(Regexper, Ba
     });
 
     return Match;
-});
+}

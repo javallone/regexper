@@ -1,4 +1,4 @@
-define(['regexper'], function(Regexper) {
+getBase = function(Regexper) {
     var Base = function() {
         this._contents = [];
         this._stack_order = [];
@@ -69,4 +69,4 @@ define(['regexper'], function(Regexper) {
     });
 
     return Base;
-});
+}

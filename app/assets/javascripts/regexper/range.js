@@ -1,4 +1,4 @@
-define(['regexper', 'regexper/base'], function(Regexper, Base) {
+getRange =  function(Regexper, Base) {
     var base_text_attrs = {
             'font-size': 12,
             'font-weight': 'bold'
@@ -56,4 +56,4 @@ define(['regexper', 'regexper/base'], function(Regexper, Base) {
     });
 
     return Range;
-});
+}

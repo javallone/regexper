@@ -1,4 +1,4 @@
-define(['regexper', 'regexper/base'], function(Regexper, Base) {
+getCharset = function(Regexper, Base) {
     var margin = 5,
         item_spacing = 10,
         base_box_attrs = {
@@ -94,4 +94,4 @@ define(['regexper', 'regexper/base'], function(Regexper, Base) {
     });
 
     return Charset;
-});
+}

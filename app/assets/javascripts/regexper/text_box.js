@@ -1,4 +1,4 @@
-define(['regexper', 'regexper/base'], function(Regexper, Base) {
+getTextBox = function(Regexper, Base) {
     var text_margin = 5;
 
     var TextBox = function(paper, label, text_attrs, rect_attrs) {
@@ -38,4 +38,4 @@ define(['regexper', 'regexper/base'], function(Regexper, Base) {
     });
 
     return TextBox;
-});
+}

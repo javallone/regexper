@@ -1,4 +1,4 @@
-define(['regexper', 'regexper/base', 'regexper/regexp'], function(Regexper, Base, Regexp) {
+getSubexp = function(Regexper, Base, Regexp) {
     var margin = 10
         base_connector_attrs = {
             'stroke-width': 2
@@ -136,4 +136,4 @@ define(['regexper', 'regexper/base', 'regexper/regexp'], function(Regexper, Base
     });
 
     return Subexp;
-});
+}

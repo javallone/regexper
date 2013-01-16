@@ -1,4 +1,4 @@
-define(['regexper', 'regexper/base'], function(Regexper, Base) {
+getRepetition = function(Regexper, Base) {
     var curve_radius = 10,
         base_text_attrs = {
             'font-size': 10
@@ -207,4 +207,4 @@ define(['regexper', 'regexper/base'], function(Regexper, Base) {
     });
 
     return Repetition;
-});
+}

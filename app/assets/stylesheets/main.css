@@ -95,6 +95,7 @@ body.is-loading #loading {
 }
 
 #error {
+    margin-top:30px;
     background: #d00;
     color: #fff;
     text-indent: 0.5em;
