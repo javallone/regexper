@@ -21,7 +21,7 @@ require.config({
         new microAjax(form.action, function(text) {
             if (this.request.status == 200) {
                 document.body.className += ' has-results';
-
+                window.location.hash = encodeURIComponent(input.value);
                 require(['regexper'], function(Regexper) {
                     Regexper.draw(paper_container, JSON.parse(text), function() {
                         document.body.className = 'has-results';
@@ -37,3 +37,18 @@ require.config({
         return false;
     };
 }());
+
+var checkForHash = function(){
+    var reHash = window.location.hash;
+    if (reHash){
+        document.getElementById('regexp_input').value = decodeURIComponent(reHash.slice(1));
+        document.getElementById('regexp_form').onsubmit();
+    }
+};
+
+var readyStateCheckInterval = setInterval(function() {
+    if (document.readyState === "complete") {
+        checkForHash();
+        clearInterval(readyStateCheckInterval);
+    }
+}, 10);
