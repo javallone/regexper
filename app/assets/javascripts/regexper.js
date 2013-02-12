@@ -59,6 +59,7 @@ getRenderer = function() {
             var module_name = structure.type;
 
             var Module = modules[module_name];
+            console.log("module_name: "+module_name)
             var module = new Module(paper, structure);
             module.complete(function() {
                 complete(module);

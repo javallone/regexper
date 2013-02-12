@@ -7,7 +7,7 @@
 //    baseUrl: '/assets'
 //});
 
-modules = {}
+modules = {};
 
 (function() {
 
@@ -16,6 +16,7 @@ modules = {}
     var base = getBase(Renderer);
     var text_box = getTextBox(Renderer, base);
     var charset = getCharset(Renderer, base);
+    var any_character = getAnyChar(Renderer, text_box);
     var escaped = getEscaped(Renderer, text_box);
     var literal = getLiteral(Renderer, text_box);
     var match = getMatch(Renderer, base, text_box);
@@ -32,7 +33,8 @@ modules = {}
         range: range,
         regexp: regexp,
         repetition: repetition,
-        subexp: subexp
+        subexp: subexp,
+        any_character: any_character
     };
 
     for (var k in RegexperClasses) {
