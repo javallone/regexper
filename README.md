@@ -5,7 +5,9 @@
 Code for the http://www.regexper.com/ site.
 
 ## This Fork
-This fork was modified by Iftah Haimovitch, it features real time client side parsing of the regular expression! No Ruby and no server side processing is needed.
+This fork was modified by Iftah Haimovitch. It has additional two (very cool) features:
+* real time client side parsing of the regular expression! No Ruby and no server side processing is needed.
+* highlighting sections of the regexp by hovering the mouse over the diagram
 
 To run the website go to `regexper/app`  and run static file serving (eg. `python -m SimpleHTTPServer 8080`) and then open the browser to http://127.0.0.1:8080/public/
 
