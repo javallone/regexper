@@ -148,7 +148,6 @@ getRepetition = function(Regexper, Base) {
                 }
             })).attr(base_connector_attrs).toBack();
 
-            this.bindNoFillHover(p1);
 
             var p2 = this._paper.path(Raphael.fullfill(path_str, {
                 start: {
@@ -161,7 +160,7 @@ getRepetition = function(Regexper, Base) {
                 }
             })).attr(base_connector_attrs).toBack();
 
-            this.bindNoFillHover(p2);
+            
         },
 
         _draw_skip_line: function() {
