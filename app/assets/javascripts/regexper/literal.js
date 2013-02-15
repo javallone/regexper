@@ -9,7 +9,7 @@ getLiteral = function(Regexper, TextBox) {
         };
 
     var Literal = function(paper, structure) {
-        TextBox.call(this, paper, '"' + structure.content + '"',
+        TextBox.call(this, paper, structure.range, '"' + structure.content + '"',
             base_text_attrs, base_rect_attrs);
     };
 

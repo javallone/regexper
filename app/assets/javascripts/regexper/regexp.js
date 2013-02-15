@@ -8,7 +8,7 @@ getRegexp = function(Regexper, Base) {
     var Regexp = function(paper, structure) {
         var self = this;
 
-        Base.call(this);
+        Base.call(this, structure.range);
 
         this._paper = paper;
 
@@ -71,6 +71,8 @@ getRegexp = function(Regexper, Base) {
                 distance = Math.abs((box.y + offset) - (item_box.y + item_offset)),
                 above = (box.y + offset) > (item_box.y + item_offset),
                 path_str;
+
+            this.bindHover(box);
 
             if (distance >= 1.5 * curve_radius) {
                 path_str = 'M{start.x},{start.y}Q{start_control.x},{start.y} {start_control.x},{start_control.y}V{end_control.y}Q{end_control.x},{end.y} {end.x},{end.y}H{end_connector.x}';

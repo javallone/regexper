@@ -1,10 +1,10 @@
 getTextBox = function(Regexper, Base) {
     var text_margin = 5;
 
-    var TextBox = function(paper, label, text_attrs, rect_attrs) {
+    var TextBox = function(paper, range, label, text_attrs, rect_attrs) {
         var text_box, rect_box;
 
-        Base.call(this);
+        Base.call(this, range);
 
         this._text = paper.text(0, 0, label);
         this._text.attr(text_attrs);
@@ -18,6 +18,9 @@ getTextBox = function(Regexper, Base) {
         rect_box = this._rect.getBBox();
         this._width = rect_box.width;
         this._height = rect_box.height;
+
+        this.bindHover(this._rect);
+        this.bindHover(this._text, this._rect);
 
         this._stack_order = [this._rect, this._text];
         this._mark_complete();

@@ -8,7 +8,7 @@ getRange =  function(Regexper, Base) {
     var Range = function(paper, structure) {
         var self = this;
 
-        Base.call(this);
+        Base.call(this, structure.range);
 
         this._dash = paper.text(0, 0, '-');
         this._dash.attr(base_text_attrs);

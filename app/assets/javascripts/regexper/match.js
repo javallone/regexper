@@ -16,7 +16,7 @@ getMatch = function(Regexper, Base, TextBox) {
     var Match = function(paper, structure) {
         var self = this;
 
-        Base.call(this);
+        Base.call(this, structure.range);
 
         this._paper = paper;
 
@@ -27,12 +27,12 @@ getMatch = function(Regexper, Base, TextBox) {
             self._contents = contents;
 
             if (structure.start) {
-                self._contents.unshift(new TextBox(paper, 'Start of Line',
+                self._contents.unshift(new TextBox(paper, [0,1], 'Start of Line',
                     base_anchor_text_attrs, base_anchor_box_attrs));
             }
 
             if (structure.end) {
-                self._contents.push(new TextBox(paper, 'End of Line',
+                self._contents.push(new TextBox(paper, [structure.range[1]-1, structure.range[1]],'End of Line',
                     base_anchor_text_attrs, base_anchor_box_attrs));
             }
 

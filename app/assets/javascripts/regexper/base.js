@@ -1,5 +1,6 @@
 getBase = function(Regexper) {
-    var Base = function() {
+    var Base = function(range) {
+        this._range = range;
         this._contents = [];
         this._stack_order = [];
         this._completes = [];
@@ -65,7 +66,49 @@ getBase = function(Regexper) {
                 this._completes[i]();
             }
             this._completes = [];
-        }
+        },
+
+        bindHover: function(item, context) {
+            item._range = this._range;
+            context = context || item;
+            item.hover(Base.prototype.hoverIn, Base.prototype.hoverOut, context, context);
+        },
+
+        bindNoFillHover: function(item, context) {
+            item._range = this._range;
+            context = context || item;
+            item.hover(Base.prototype.hoverInNoFill, Base.prototype.hoverOutNoFill, context, context);
+        },
+
+        hoverIn: function() {
+            highlightRange(this._range[0], this._range[1]);
+            this._fill = this.attr('fill');
+            this._stroke = this.attr('stroke');
+            if (!this._hoverFill) {
+                this._hoverFill = "#eeee88";
+                this._hoverStroke = "#888844"
+            }
+            this.attr({"fill": this._hoverFill, "stroke": this._hoverStroke });
+        },
+        hoverOut: function() {
+            highlightRange();
+            this.attr({"fill": this._fill, "stroke": this._stroke });
+        },
+
+        hoverInNoFill: function() {
+            highlightRange(this._range[0], this._range[1]);
+            this._swidth = this.attr('stroke-width');
+            this._stroke = this.attr('stroke');
+            if (!this._hoverStroke) {
+                this._strokewidth= 3;
+                this._hoverStroke = "#888844"
+            }
+            this.attr({'stroke-width': this._strokewidth, "stroke": this._hoverStroke });
+        },
+        hoverOutNoFill: function() {
+            highlightRange();
+            this.attr({'stroke-width': this._swidth, "stroke": this._stroke });
+        },
     });
 
     return Base;

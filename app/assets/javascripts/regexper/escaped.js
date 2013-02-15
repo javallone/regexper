@@ -31,7 +31,7 @@ getEscaped = function(Regexper, TextBox) {
             }
         }
 
-        TextBox.call(this, paper, label,
+        TextBox.call(this, paper, structure.range, label,
             base_text_attrs, base_rect_attrs);
     };
 

@@ -33,12 +33,9 @@
 
     <section id="content">
         <div class="container">
-            <form id="regexp_form" method="POST" action="/parse">
-                <span>
-                    <input id="regexp_input" type="text" autofocus="autofocus" placeholder="Enter JavaScript-style regular expression to display" />
-                </span>
-                <button type="submit">Display</button>
-            </form>
+            <span>
+                <input id="regexp_input" type="text" autofocus="autofocus" placeholder="Enter JavaScript-style regular expression to display" />
+            </span>
         </div>
         <div id="error"></div>
         <div class="results">
@@ -46,15 +43,17 @@
                 <img src="/assets/images/loader.gif" alt="Loading" />
             </div>
 
-
             <div id="paper-container"></div>
+        </div>
+        <div id="regexp-cont">
+            <span id="regexp"></span>
         </div>
     </section>
 
     <footer>
         <ul>
             <li>Created by <a href="mailto:jeff.avallone@gmail.com">Jeff Avallone</a></li>
-            <li>Modified for real time updates by <a href="#">Iftah Haimovitch</a></li>
+            <li>Highlight by hover feature and real time updates by <a href="https://github.com/Iftahh">Iftah Haimovitch</a></li>
             <li class="last"><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_US">
                 <img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/80x15.png" />
             </a></li>

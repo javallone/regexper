@@ -10,7 +10,7 @@ getAnyChar = function(Regexper, TextBox) {
         };
 
     var AnyCharacter = function(paper, structure) {
-        TextBox.call(this, paper, 'any character',
+        TextBox.call(this, paper, structure.range, 'any character',
             base_text_attrs, base_rect_attrs);
     };
 

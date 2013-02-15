@@ -19,6 +19,7 @@ getRenderer = function() {
         },
 
         draw: function(paper_container, data, complete) {
+            var self = this;
             Raphael(paper_container, 2, 2, function() {
                 var paper = this;
 
@@ -33,14 +34,35 @@ getRenderer = function() {
                     box = expression.get_box();
                     offset = expression.get_connection_offset();
 
-                    Regexper.draw_anchor(paper, 10, box.y + offset, box.x);
-                    Regexper.draw_anchor(paper, box.x2 + 10, box.y + offset, box.x2);
+                    var start = Regexper.draw_anchor(paper, 10, box.y + offset, box.x);
+                    var end = Regexper.draw_anchor(paper, box.x2 + 10, box.y + offset, box.x2);
+
+                    start._range = [0,0];
+                    start.hover(self.hoverIn, self.hoverOut, start, start);
+                    console.log(data.structure);
+                    end._range = [data.structure.range[1],data.structure.range[1]];
+                    end.hover(self.hoverIn, self.hoverOut, end, end);
 
                     paper.setSize(box.width + 40, box.height + 20);
 
                     complete();
                 });
             });
+        },
+
+        hoverIn: function() {
+            highlightRange(this._range[0], this._range[1]);
+            this._fill = this.attr('fill');
+            this._stroke = this.attr('stroke');
+            if (!this._hoverFill) {
+                this._hoverFill = "#eeee88";
+                this._hoverStroke = "#888844"
+            }
+            this.attr({"fill": this._hoverFill, "stroke": this._hoverStroke });
+        },
+        hoverOut: function() {
+            highlightRange();
+            this.attr({"fill": this._fill, "stroke": this._stroke });
         },
 
         draw_anchor: function(paper, x, y, connection) {
@@ -52,14 +74,13 @@ getRenderer = function() {
                 end: connection
             })).attr(base_path_attrs);
 
-            paper.circle(x, y, 5).attr(base_anchor_attrs);
+            return paper.circle(x, y, 5).attr(base_anchor_attrs);
         },
 
         render: function(paper, structure, complete) {
             var module_name = structure.type;
 
             var Module = modules[module_name];
-            console.log("module_name: "+module_name)
             var module = new Module(paper, structure);
             module.complete(function() {
                 complete(module);

@@ -164,7 +164,7 @@ RegexperClasses = {
           }
           return {
               type: "subexp",
-                  range: [this.offset, this.offset+this.textValue.length],
+              range: [this.offset, this.offset+this.textValue.length],
               kind: this.kind(),
               group: this._capture_group(),
               content: objContent
@@ -213,23 +213,7 @@ RegexperClasses = {
           }
       }
   },
-//    def inverted?
-//      invert.text_value == '^'
-//    end
-//
-//    def content
-//      match_spec.elements
-//    end
-//
-//    def to_obj
-//      {
-//        :type => :charset,
-//        :range => [interval.begin, interval.end],
-//        :inverted => inverted?,
-//        :content => content.map(&:to_obj)
-//      }
-//    end
-//  end
+
 
   CharsetRange: {
       to_obj: function() {

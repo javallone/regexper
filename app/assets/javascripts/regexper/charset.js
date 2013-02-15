@@ -13,7 +13,7 @@ getCharset = function(Regexper, Base) {
     var Charset = function(paper, structure) {
         var self = this;
 
-        Base.call(this);
+        Base.call(this, structure.range);
 
         this._box = paper.rect(0, 0, 0, 0);
         this._box.attr(base_box_attrs);
@@ -50,6 +50,8 @@ getCharset = function(Regexper, Base) {
                 width: self._width,
                 height: self._height
             });
+
+            self.bindHover(self._box);
 
             self._height += box.height;
 
