@@ -30,6 +30,29 @@ header span {
     color: #6b6659;
 }
 
+#regexp-cont {
+    margin-top:15px;
+    text-align: center;
+    padding: 4px;
+}
+#regexp {
+    padding: 4px;
+    border: 1px solid #000;
+    background: white;
+    font-size: 20px;
+    line-height: 20px;
+    white-space: pre;
+    font-family: courier;
+}
+
+#regexp .highlight {
+    background-color: #ff7;
+    min-width:2px;
+    min-height:20px;
+    display:inline-block;
+    border: 1px solid #ffe;
+}
+
 #content .container {
     border: 1px solid #000;
     position: relative;
@@ -45,7 +68,7 @@ body.has-results #content .results {
     display: block;
 }
 
-#content span {
+#container span {
     margin-right: 100px;
 }
 
@@ -95,6 +118,7 @@ body.is-loading #loading {
 }
 
 #error {
+    margin-top:30px;
     background: #d00;
     color: #fff;
     text-indent: 0.5em;

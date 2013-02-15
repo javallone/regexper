@@ -1,4 +1,4 @@
-define(['regexper', 'regexper/base', 'regexper/regexp'], function(Regexper, Base, Regexp) {
+getSubexp = function(Regexper, Base, Regexp) {
     var margin = 10
         base_connector_attrs = {
             'stroke-width': 2
@@ -16,7 +16,7 @@ define(['regexper', 'regexper/base', 'regexper/regexp'], function(Regexper, Base
     var Subexp = function(paper, structure) {
         var self = this, label;
 
-        Base.call(this);
+        Base.call(this, structure.range);
 
         this._paper = paper;
 
@@ -40,6 +40,9 @@ define(['regexper', 'regexper/base', 'regexper/regexp'], function(Regexper, Base
 
             this._text = paper.text(0, 0, label);
             this._text.attr(base_text_attrs);
+
+            this.bindHover(this._rect);
+            this.bindHover(this._text, this._rect);
 
             this._stack_order = [this._rect, this._text];
         }
@@ -136,4 +139,4 @@ define(['regexper', 'regexper/base', 'regexper/regexp'], function(Regexper, Base
     });
 
     return Subexp;
-});
+}

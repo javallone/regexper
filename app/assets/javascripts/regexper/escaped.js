@@ -1,4 +1,4 @@
-define(['regexper', 'regexper/text_box'], function(Regexper, TextBox) {
+getEscaped = function(Regexper, TextBox) {
     var base_text_attrs = {
             'font-size': 12
         },
@@ -31,11 +31,11 @@ define(['regexper', 'regexper/text_box'], function(Regexper, TextBox) {
             }
         }
 
-        TextBox.call(this, paper, label,
+        TextBox.call(this, paper, structure.range, label,
             base_text_attrs, base_rect_attrs);
     };
 
     Regexper.extend(Escaped.prototype, TextBox.prototype);
 
     return Escaped;
-});
+}

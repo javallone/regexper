@@ -1,4 +1,4 @@
-define(['regexper', 'regexper/base'], function(Regexper, Base) {
+getCharset = function(Regexper, Base) {
     var margin = 5,
         item_spacing = 10,
         base_box_attrs = {
@@ -13,7 +13,7 @@ define(['regexper', 'regexper/base'], function(Regexper, Base) {
     var Charset = function(paper, structure) {
         var self = this;
 
-        Base.call(this);
+        Base.call(this, structure.range);
 
         this._box = paper.rect(0, 0, 0, 0);
         this._box.attr(base_box_attrs);
@@ -50,6 +50,8 @@ define(['regexper', 'regexper/base'], function(Regexper, Base) {
                 width: self._width,
                 height: self._height
             });
+
+            self.bindHover(self._box);
 
             self._height += box.height;
 
@@ -94,4 +96,4 @@ define(['regexper', 'regexper/base'], function(Regexper, Base) {
     });
 
     return Charset;
-});
+}

@@ -1,0 +1,28 @@
+<html>
+<head><title>Testing Canopy</title></head>
+<body>
+<h1>Testing Canpoy</h1>
+
+<input type="text" id="regexp_input">
+
+</body>
+
+<script type="text/javascript" src="/assets/javascripts/tgram.js"></script>
+<script type="text/javascript">
+    RegexperParser.Regexp = {
+        name: "Regexp"
+    }
+    RegexperParser.Match = {
+        name: "Match"
+    }
+    RegexperParser.Literal = {
+        name: "Literal"
+    }
+    var input = document.getElementById('regexp_input');
+    input.onkeyup = function() {
+        var tree = RegexperParser.parse(input.value)
+        console.log(tree)
+    }
+
+</script>
+</html>

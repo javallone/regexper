@@ -1,4 +1,4 @@
-define(['regexper', 'regexper/text_box'], function(Regexper, TextBox) {
+getLiteral = function(Regexper, TextBox) {
     var base_text_attrs = {
             'font-size': 12
         },
@@ -9,11 +9,11 @@ define(['regexper', 'regexper/text_box'], function(Regexper, TextBox) {
         };
 
     var Literal = function(paper, structure) {
-        TextBox.call(this, paper, '"' + structure.content + '"',
+        TextBox.call(this, paper, structure.range, '"' + structure.content + '"',
             base_text_attrs, base_rect_attrs);
     };
 
     Regexper.extend(Literal.prototype, TextBox.prototype);
 
     return Literal;
-});
+}

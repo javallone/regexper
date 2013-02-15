@@ -1,4 +1,4 @@
-define(['regexper', 'regexper/base'], function(Regexper, Base) {
+getRepetition = function(Regexper, Base) {
     var curve_radius = 10,
         base_text_attrs = {
             'font-size': 10
@@ -12,7 +12,7 @@ define(['regexper', 'regexper/base'], function(Regexper, Base) {
             repeat_count = structure.repeat_count,
             loop_desc;
 
-        Base.call(this);
+        Base.call(this, structure.range);
 
         this._paper = paper;
 
@@ -127,6 +127,7 @@ define(['regexper', 'regexper/base'], function(Regexper, Base) {
                     y: box.y2 - text_box.height / 2
                 });
             }
+
         },
 
         _draw_lead_lines: function(item) {
@@ -136,7 +137,7 @@ define(['regexper', 'regexper/base'], function(Regexper, Base) {
                 item_offset = item.get_connection_offset(),
                 path_str = 'M{start.x},{start.y}H{end.x}';
 
-            this._paper.path(Raphael.fullfill(path_str, {
+            var p1 = this._paper.path(Raphael.fullfill(path_str, {
                 start: {
                     x: box.x,
                     y: box.y + offset
@@ -147,7 +148,8 @@ define(['regexper', 'regexper/base'], function(Regexper, Base) {
                 }
             })).attr(base_connector_attrs).toBack();
 
-            this._paper.path(Raphael.fullfill(path_str, {
+
+            var p2 = this._paper.path(Raphael.fullfill(path_str, {
                 start: {
                     x: box.x2,
                     y: box.y + offset
@@ -157,6 +159,8 @@ define(['regexper', 'regexper/base'], function(Regexper, Base) {
                     y: item_box.y + item_offset
                 }
             })).attr(base_connector_attrs).toBack();
+
+            
         },
 
         _draw_skip_line: function() {
@@ -165,7 +169,7 @@ define(['regexper', 'regexper/base'], function(Regexper, Base) {
                 offset = this.get_connection_offset(),
                 path_str = 'M{start.x},{start.y}q{radius},0 {radius},-{radius}V{top}q0,-{radius} {radius},-{radius}H{end}q{radius},0 {radius},{radius}V{bottom}q0,{radius} {radius},{radius}';
 
-            this._paper.path(Raphael.fullfill(path_str, {
+            var p1 = this._paper.path(Raphael.fullfill(path_str, {
                 start: {
                     x: box.x,
                     y: box.y + offset
@@ -175,6 +179,8 @@ define(['regexper', 'regexper/base'], function(Regexper, Base) {
                 bottom: box.y + offset - curve_radius,
                 end: box.x2 - 2 * curve_radius
             })).attr(base_connector_attrs).toBack();
+
+            this.bindNoFillHover(p1);
         },
 
         _draw_loop_line: function() {
@@ -183,7 +189,7 @@ define(['regexper', 'regexper/base'], function(Regexper, Base) {
                 offset = this.get_connection_offset(),
                 path_str = 'M{start.x},{start.y}q{radius},0 {radius},{radius}V{bottom}q0,{radius} -{radius},{radius}H{end}q-{radius},0 -{radius},-{radius}V{top}q0,-{radius} {radius},-{radius}';
 
-            this._paper.path(Raphael.fullfill(path_str, {
+            var p1= this._paper.path(Raphael.fullfill(path_str, {
                 start: {
                     x: expression_box.x2,
                     y: box.y + offset
@@ -193,6 +199,8 @@ define(['regexper', 'regexper/base'], function(Regexper, Base) {
                 bottom: expression_box.y2,
                 end: expression_box.x
             })).attr(base_connector_attrs).toBack();
+
+            this.bindNoFillHover(p1);
         },
 
         get_connection_offset: function() {
@@ -207,4 +215,4 @@ define(['regexper', 'regexper/base'], function(Regexper, Base) {
     });
 
     return Repetition;
-});
+}

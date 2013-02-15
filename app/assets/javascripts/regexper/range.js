@@ -1,4 +1,4 @@
-define(['regexper', 'regexper/base'], function(Regexper, Base) {
+getRange =  function(Regexper, Base) {
     var base_text_attrs = {
             'font-size': 12,
             'font-weight': 'bold'
@@ -8,7 +8,7 @@ define(['regexper', 'regexper/base'], function(Regexper, Base) {
     var Range = function(paper, structure) {
         var self = this;
 
-        Base.call(this);
+        Base.call(this, structure.range);
 
         this._dash = paper.text(0, 0, '-');
         this._dash.attr(base_text_attrs);
@@ -56,4 +56,4 @@ define(['regexper', 'regexper/base'], function(Regexper, Base) {
     });
 
     return Range;
-});
+}
