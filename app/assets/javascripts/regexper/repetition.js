@@ -22,14 +22,17 @@ define(['regexper', 'regexper/base'], function(Regexper, Base) {
         case 'any':
             this._include_skip = true;
             this._include_loop = true;
+            loop_desc = '0+ times';
             break;
         case 'required':
             this._include_skip = false;
             this._include_loop = true;
+            loop_desc = '1+ times';
             break;
         case 'optional':
             this._include_skip = true;
             this._include_loop = false;
+            loop_desc = '0 or 1 time';
             break;
         default:
             if (typeof repeat_count.start !== 'undefined' || typeof repeat_count.stop !== 'undefined') {
