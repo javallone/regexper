@@ -10,7 +10,8 @@ require.config({
     var form = document.getElementById('regexp_form'),
         input = document.getElementById('regexp_input'),
         error = document.getElementById('error'),
-        paper_container = document.getElementById('paper-container');
+        paper_container = document.getElementById('paper-container'),
+        regex = location.search.match(/[\\?&]show=([^&#]*)/);
 
     form.onsubmit = function() {
         paper_container.innerHTML = '';
@@ -36,4 +37,10 @@ require.config({
 
         return false;
     };
+
+    if (regex && regex.length > 0) {
+        input.value = regex[1];
+
+        form.onsubmit();
+    }
 }());
