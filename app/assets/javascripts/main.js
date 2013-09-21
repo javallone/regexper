@@ -31,7 +31,6 @@ require.config({
                     Regexper.draw(paper_container, JSON.parse(text), function() {
                         document.body.className = 'has-results';
                         current_request = null;
-                        console.log("DONE");
                     });
                 });
             } else {
