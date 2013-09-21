@@ -44,17 +44,29 @@ require.config({
     };
 }());
 
-var checkForHash = function(){
-    var reHash = window.location.hash;
-    if (reHash){
-        document.getElementById('regexp_input').value = decodeURIComponent(reHash.slice(1));
-        document.getElementById('regexp_form').onsubmit();
-    }
-};
+(function() {
+    var old_hash = '',
+        render = function(expression) {
+            if (expression){
+                document.getElementById('regexp_input').value = decodeURIComponent(expression);
+                document.getElementById('regexp_form').onsubmit();
+            }
+        },
+        hash_check = function() {
+            var hash = location.hash.slice(1);
 
-var readyStateCheckInterval = setInterval(function() {
-    if (document.readyState === "complete") {
-        checkForHash();
-        clearInterval(readyStateCheckInterval);
+            if (hash !== old_hash) {
+                old_hash = hash;
+                render(hash);
+            }
+        };
+
+    if ('onhashchange' in window) {
+        window.onhashchange = hash_check;
+        window.onload = hash_check;
+    } else {
+        window.onload = function() {
+            setInterval(hash_check, 100);
+        };
     }
-}, 10);
+}());
