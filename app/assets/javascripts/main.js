@@ -18,6 +18,10 @@ require.config({
             return false;
         }
 
+        if (input.value === '') {
+            return false;
+        }
+
         paper_container.innerHTML = '';
         error.innerHTML = '';
 
