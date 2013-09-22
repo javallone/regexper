@@ -10,7 +10,7 @@ module Regexper
   @@parser = RegexperParser.new
 
   def self.parse(data)
-    tree = @@parser.parse(data)
+    tree = @@parser.parse(data.gsub(/^\s+(?=\/)/, '').gsub(/\/\s+/, '/'))
 
     if tree.nil?
       raise ParseError, @@parser.failure_reason

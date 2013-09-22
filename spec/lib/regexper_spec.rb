@@ -38,6 +38,14 @@ describe Regexper do
         lambda { Regexper.parse('x{}') }.should_not raise_error
       end
 
+      it "does not raise an exception for leading whitespace on /.../ syntax" do
+        lambda { Regexper.parse(' /test/') }.should_not raise_error
+      end
+
+      it "does not raise an exception for trailing whitespace on /.../ syntax" do
+        lambda { Regexper.parse('/test/ ') }.should_not raise_error
+      end
+
     end
 
   end
