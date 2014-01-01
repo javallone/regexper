@@ -28,4 +28,4 @@ It is also recommended to run guard while developing to ensure tests continue pa
 
 ## License
 
-This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License. See http://creativecommons.org/licenses/by-nc-sa/3.0/ for full license.
+See LICENSE.md file for licensing details.
