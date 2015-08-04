@@ -2,6 +2,8 @@
 
 # Regexper
 
+# NOTE: This repo is deprecated. Development will continue on regexper.com code in the [static site codebase](https://github.com/javallone/regexper-static)
+
 Code for the http://www.regexper.com/ site.
 
 ## Contributing
