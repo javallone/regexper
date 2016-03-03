@@ -30,6 +30,12 @@ header span {
     color: #6b6659;
 }
 
+#notice {
+  font-weight: bold;
+  font-size: 1.5em;
+  padding-bottom: 0;
+}
+
 #content .container {
     border: 1px solid #000;
     position: relative;
